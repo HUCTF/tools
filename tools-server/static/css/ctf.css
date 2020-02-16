@@ -1,0 +1,132 @@
+html,body{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+.div_footer{
+    width: 100%;
+    text-align: center;
+    background-color: #393D49;
+    display:table;
+    margin-top: 20px;
+}
+.new_footer{
+    color: #c2c2c2;
+    margin-top: 20px;
+    padding: 5px;
+    text-align: left
+}
+.new_footer span{
+    color: #009688;
+}
+.new_footer ul{
+    margin-top: 5px;
+}
+.new_footer ul li{
+    padding: 2px;
+    color: #c2c2c2;
+}
+.new_footer ul li a{
+    color: #c2c2c2;
+}
+.new_footer ul li a:hover{
+    text-decoration: underline;
+}
+.second_footer{
+    color:#c2c2c2;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+.second_footer a{
+    color: #c2c2c2;
+}
+.second_footer a:hover{
+    color: #c2c2c2;
+    text-decoration: underline;
+}
+.fly_header{
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 10000;
+    width: 100%;
+    height: 60px;
+    border-radius: 0;
+    border-bottom-width: 1px;
+    border-bottom-color: #d2d2d2;
+    border-bottom-style: solid
+}
+.ctf_zhong_biaoti{
+    color:#009688;
+}
+.zhong_biaoti_index{
+    color:#393D49;
+}
+.layui-btn{
+    background-color:#009688;
+}
+.layui-btn-danger{
+    background-color:#FF5722;
+}
+.layui-form-danger:focus{
+    border-color: #009688 !important;
+    box-shadow: 0 0 5px #09b4a3;
+    -webkit-box-shadow: 0 0 5px #09b4a3;
+    -moz-box-shadow: 0 0 5px #09b4a3;
+}
+.layui-textarea {
+	min-height: 100px;
+	height: auto;
+	padding: 6px 10px;
+    resize: vertical;
+    color: #393D49;
+}
+.layui-form-item-input {
+	margin-bottom: 0px;
+	clear: both;
+    *zoom: 1;
+    color: #393D49;
+}
+.layui-nav .layui-nav-item a:hover, .layui-nav .layui-this a {
+	color: #393D49;
+}
+.layui-nav .layui-nav-item a {
+    color:#393D49;
+}
+.layui-nav .layui-nav-more {
+	border-color: #393D49 transparent transparent;
+	border-top-color: #393D49;
+}
+.layui-nav .layui-nav-mored,.layui-nav-itemed .layui-nav-more{
+    border-color:transparent transparent #393D49;
+}
+.layui-nav .layui-nav-child a:hover{
+    background-color:#fff;
+    color: #009688;
+    text-decoration: underline;
+}
+.layui-nav .layui-nav-child dd.layui-this a, .layui-nav-child dd.layui-this{
+    background-color:#fff;
+    color: #009688;
+}
+
+.layui-nav .layui-this:after, .layui-nav-bar, .layui-nav-tree .layui-nav-itemed:after {
+    background: #009688;
+}
+.down-cai{
+    position:fixed;
+    padding-right: 5%;
+    height: 100%;
+}
+.down-cai dt{
+    padding-left:20px;
+    padding-top: 5px;
+}
+.down-cai dt span{
+    font-size: 16px;
+    color:#009688;
+}
+.down-cai dd{
+    float: left;
+    width: 20%;
+}
