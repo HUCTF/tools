@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> </title>
+</head>
+<body>
+<form action = "http://localhost:8887/base_all"  method ="GET">
+     <p>字符串<input type = "text" name = "text" /></p>
+    <select name="num_of_base">
+
+        <option value="64">64</option>
+        <option value="32">32</option>
+        <option value="58">58</option>
+        <option value="91">91</option>
+        <option value="36">36</option>
+        <option value="62">62</option>
+        <option value="85">85</option>
+    </select>
+    <br>
+    <input type="radio" name="encode_or_decode" value="encode" checked>encode
+    <input type="radio" name="encode_or_decode" value="decode">decode
+    <br>
+     <p><input type = "submit" value = "submit" /></p>
+</form>
+
+{% if result%}
+    <text>{{ result['result']}}</text>
+ {% endif %}
+</body>
+</html>
