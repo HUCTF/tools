@@ -1,0 +1,1452 @@
+
+<head>
+  <style type="text/css">
+    a.item-header{
+        color: #009688;
+    }
+  </style>
+
+  <style type="text/css">
+    a.index-btn{
+        border-style: solid;
+        border-width: 1px;
+        border-color: #009688;
+        background-color: none;
+        height: 800px;
+        width: 200px;
+    }
+    .item {
+        width: 100%;
+        float: left;
+        margin: 0 13px 13px 0;
+        border: 1px solid #CCC;
+        background-image: -webkit-linear-gradient(top, #FFF, #F9F9F9);
+        position: static;
+        border-radius: 5px;
+    }
+    .item:hover {
+        box-shadow: 0 3px 8px 0 rgba(0,0,0,0.2);
+    }
+    .item-inner {
+        padding: 10px 15px 10px 8px;
+        position: relative;
+        _position: static;
+    }
+    .item-hd{
+        margin: 0;
+        padding: 0;
+    }
+    .item-category {
+        float: right;
+    }
+    .item-bd{
+        margin: 0;
+        padding: 0;
+    }
+    .item-desc {
+        border-top: 1px solid #DDD;
+        margin-top: 8px;
+        padding: 10px 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: #777;
+        font-size:12px;
+    }
+    .item-ft {
+        margin-top:30px;
+        text-align: right;
+    }
+    .item-link {
+        float: left;
+        margin-top: 3px;
+        color: #999;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    a.item-hd {
+        display: inline-block;
+        position: relative;
+        height: 20px;
+        line-height: 20px;
+        text-align: right;
+        color: #393D49
+    }
+    a.item-hd:hover{
+        color:#009688;
+        text-decoration: underline;
+    }
+    a.item-btn {
+        display: inline-block;
+        position: relative;
+        width: 60px;
+        height: 20px;
+        line-height: 20px;
+        text-align: right;
+        color: #393D49
+    }
+    a.item-btn:hover{
+        color:#009688;
+        text-decoration: underline;
+    }
+    .item h3 {
+        font-size: 16px;
+        margin: 0;
+        line-height: 1.4;
+        margin-bottom: 5px;
+        height: 22px;
+        overflow: hidden;
+    }
+    .item-icon {
+        float: left;
+        margin-right: 10px;
+    }
+    h3{
+        color: #393D49;
+    }
+  </style>
+
+  <!-- 百度统计 -->
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?beeb9fcd2a1fda9ad214b7e950c372fe";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+</head>
+<body>
+        <div class="layui-layout layui-layout-admin fly_header">
+            <div class="layui-header" style="background-color:rgba(255,255,255,0.9);">
+ <!--             <div class="layui-logo"><a href="/"><img src="static/picture/ctfcode.png" height="20px;"></a></div>-->
+              <!-- 头部区域（可配合layui已有的水平导航） -->
+              <ul class="layui-nav layui-layout-left">
+                  <!-- 左侧导航内容 -->
+ <!--                 <li class="layui-nav-item">
+                        <a href="http://www.ssleye.com/" target="_blank">SSL在线工具</a>
+                  </li>
+                  <li class="layui-nav-item layui-hide-xs">
+                    <a href="http://scan.ssleye.com/" target="_blank">SSL漏洞在线检测</a>
+                  </li>
+                  <li class="layui-nav-item layui-hide-xs">
+                    <a href="http://www.nicetool.net/" target="_blank" style="color:green;">NiceTool</a>
+                  </li>
+                  <li class="layui-nav-item layui-hide-xs">
+                    <a href="http://www.ssleye.com/cert_mall.html" target="_blank" style="color:#FF5722;">买证书</a>
+                  </li>-->
+              </ul>
+              <ul class="layui-nav layui-layout-right layui-hide-xs">
+                    <li class="layui-nav-item">
+                           <!-- <a href="javascript:;">快速导航</a>-->
+                            <dl class="layui-nav-child down-cai">
+                                <dt><span><b>CFT编码</b></span></dt>
+                                    <dd><a href="to_base64">base编码<span class="layui-badge-dot"></span></a></dd>
+                                    <dd><a href="hex.html">Hex编码</a></dd>
+                                    <dd><a href="url.html">URL编码</a></dd>
+                                    <dd><a href="quoted.html">Quoted编码</a></dd>
+                                    <dd><a href="mimetypes.html">Mimetypes</a></dd>
+                                    <dd><a href="html_en.html">HTML编码</a></dd>
+                                    <dd><a href="escape.html">Escape编码<span class="layui-badge-dot"></span></a></dd>
+                                    <dd><a href="tapcode.html">敲击码</a></dd>
+                                    <dd><a href="morse.html">莫尔斯电码<span class="layui-badge-dot"></span></a></dd>
+                                    <dd><a href="hash.html">哈希计算</a></dd>
+                                    <dd><a href="caes.html">AES加密<span class="layui-badge-dot"></span></a></dd>
+                                    <dd><a href="cdes.html">DES加密</a></dd>
+                                    <dd><a href="tdes.html">Terple DES加密</a></dd>
+                                    <dd><a href="rc4.html">RC4加密</a></dd>
+                                    <dd><a href="jinzhi.html">进制转换<span class="layui-badge-dot"></span></a></dd>
+                                    <dd><a href="base36w.html">base36编码</a></dd>
+                                    <dd><a href="base58w.html">base58编码<span class="layui-badge-dot"></span></a></dd>
+                                    <dd><a href="base62.html">base62编码</a></dd>
+                                    <dd><a href="base91.html">base91编码</a></dd>
+                                    <dd><a href="pub_asys.html">公钥解析</a></dd>
+                                    <dd><a href="priv_asys.html">RSA私钥解析</a></dd>
+                                    <dd><a href="base92.html">Base92编码</a></dd>
+                                    <dd><a href="base85.html">Base85编码<span class="layui-badge-dot"></span></a></dd>
+                                    <dd><a href="cencode.html">ASCII编码转换</a></dd>
+                                    <hr class="layui-bg-gray">
+                                <dt><span><b>CFT算法</b></span></dt>
+                                    <dd><a href="adfgx.html">ADFGX密码</a></dd>
+                                    <dd><a href="adfgvx.html">ADFGVX密码</a></dd>
+                                    <dd><a href="affine.html">仿射密码</a></dd>
+                                    <dd><a href="autokey.html">自动密钥密码</a></dd>
+                                    <dd><a href="atbash.html">埃特巴什码</a></dd>
+                                    <dd><a href="beaufort.html">博福特密码</a></dd>
+                                    <dd><a href="bifid.html">双密码</a></dd>
+                                    <dd><a href="caesar.html">凯撒密码<span class="layui-badge-dot"></span></a></dd>
+                                    <dd><a href="colum.html">列移位密码</a></dd>
+                                    <dd><a href="#">恩尼格玛密码</a></dd>
+                                    <dd><a href="four.html">四方密码</a></dd>
+                                    <dd><a href="gronsfeld.html">Gronsfeld密码</a></dd>
+                                    <dd><a href="#">便携式机械密码</a></dd>
+                                    <dd><a href="playfair.html">普莱菲尔密码</a></dd>
+                                    <dd><a href="#">波利比奥斯方阵密码</a></dd>
+                                    <dd><a href="porta.html">Porta密码</a></dd>
+                                    <dd><a href="railfence.html">栅栏密码<span class="layui-badge-dot"></span></a></dd>
+                                    <dd><a href="rot13.html">Rot13密码<span class="layui-badge-dot"></span></a></dd>
+                                    <dd><a href="simple.html">简单换位密码<span class="layui-badge-dot"></span></a></dd>
+                                    <dd><a href="vigenere.html">维吉尼亚密码</a></dd>
+                                    <dd><a href="pigpen.html">猪圈密码<span class="layui-badge-dot"></span></a></dd>
+                                    <dd><a href="baconian.html">培根密码</a></dd>
+                                    <dd><a href="runkey.html">滚动密钥密码</a></dd>
+                                    <dd><a href="#">希尔密码</a></dd>
+                                    <dd><a href="keyword.html">关键字密码</a></dd>
+                                    <dd><a href="a1z26.html">A1z26密码<span class="layui-badge-dot"></span></a></dd>
+                                    <hr class="layui-bg-gray">
+                                <dt><span><b>CTF杂项</b></span></dt>
+                                    <dd><a href="xxencode.html">XXencode<span class="layui-badge-dot"></span></a></dd>
+                                    <dd><a href="uu.html">UUencode</a></dd>
+                                    <dd><a href="ppencode.html">PPencode</a></dd>
+                                    <dd><a href="aaencode.html">AAencode</a></dd>
+                                    <dd><a href="jjencode.html">JJencode</a></dd>
+                                    <dd><a href="jsfuck.html">JSfuck<span class="layui-badge-dot"></span></a></dd>
+                                    <dd><a href="brain.html">Brainfuck</a></dd>
+                                    <dd><a href="bubble.html">BubbleBabble<span class="layui-badge-dot"></span></a></dd>
+                                    <dd><a href="handycode.html">Handycode</a></dd>
+                                    <dd><a href="punycode.html">Punycode<span class="layui-badge-dot"></span></a></dd>
+                                    <dd><a href="#">Poemcode</a></dd>
+                                    <dd><a href="web_socket.html">WebSocket测试<span class="layui-badge-dot"></span></a></dd>
+                                    <dd><a href="http_head.html">HTTP(S)响应头查看</a></dd>
+                            </dl>
+                    </li>
+              </ul>
+            </div>
+        </div>
+        <!-- 内容主体区域 -->
+
+    <!-- 内容主体区域 -->
+    <div class="layui-container" style="margin-top:80px;">
+        <div class="layui-row" style="margin-top:20px;">
+            <div class="layui-col-md4">&#12288;</div>
+                <div class="layui-col-md4" style="text-align:center;">
+                    <fieldset class="layui-elem-field layui-field-title" style="margin:0 0 20px;">
+                        <legend class="zhong_biaoti_index" align="center"><h2>CTF编码</h2></legend>
+                    </fieldset>
+                </div>
+            <div class="layui-col-md4"></div>
+        </div>
+        <div class="layui-row layui-col-space10">
+            <div class="layui-col-md3">
+                <div class="item">
+                    <div class="item-inner">
+                        <div class="item-hd">
+                            <a href="to_base64" class="item-icon" title="Base在线编解码"><img src="static/picture/code.png" alt="Base在线编解码"/></a>
+                            <h3><a class="item-hd" href="to_base64" title="Base在线编解码">Base编码</a></h3>
+                            </div>
+                        <div class="item-bd">
+                            <div class="item-desc" title="Base64、Base32、Base16">Base64、Base32、Base16</div>
+                        </div>
+                        <div class="item-ft">
+                            <span class="item-link">ctf.ssleye.com</span>
+                            <a class="item-btn" href="to_base64">进入</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md3">
+                    <div class="item">
+                        <div class="item-inner">
+                            <div class="item-hd">
+                                <a href="hex.html" class="item-icon" title="Hex在线编解码"><img src="static/picture/hex.png" alt="Hex在线编解码"/></a>
+                                <h3><a class="item-hd" href="hex.html" title="Hex在线编解码">Hex编码</a></h3>
+                                </div>
+                            <div class="item-bd">
+                                <div class="item-desc" title="Hex">Hex，十六进制编码转换</div>
+                            </div>
+                            <div class="item-ft">
+                                <span class="item-link">ctf.ssleye.com</span>
+                                <a class="item-btn" href="hex.html">进入</a>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="layui-col-md3">
+                    <div class="item">
+                        <div class="item-inner">
+                            <div class="item-hd">
+                                <a href="url.html" class="item-icon" title="URL在线编解码"><img src="static/picture/url.png" alt="URL在线编解码"/></a>
+                                <h3><a class="item-hd" href="url.html" title="URL在线编解码">URL编码</a></h3>
+                                </div>
+                            <div class="item-bd">
+                                <div class="item-desc" title="Url">Url</div>
+                            </div>
+                            <div class="item-ft">
+                                <span class="item-link">ctf.ssleye.com</span>
+                                <a class="item-btn" href="url.html">进入</a>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="layui-col-md3">
+                    <div class="item">
+                        <div class="item-inner">
+                            <div class="item-hd">
+                                <a href="quoted.html" class="item-icon" title="Quoted在线编解码"><img src="static/picture/quoted.png" alt="Quoted在线编解码""/></a>
+                                <h3><a class="item-hd" href="quoted.html" title="Quoted在线编解码"">Quoted-printable编码</a></h3>
+                                </div>
+                            <div class="item-bd">
+                                <div class="item-desc" title="Quoted-printable">Quoted-printable</div>
+                            </div>
+                            <div class="item-ft">
+                                <span class="item-link">ctf.ssleye.com</span>
+                                <a class="item-btn" href="quoted.html">进入</a>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+        <div class="layui-row layui-col-space10">
+                <div class="layui-col-md3">
+                    <div class="item">
+                        <div class="item-inner">
+                            <div class="item-hd">
+                                <a href="mimetypes.html" class="item-icon" title="获取http消息头应用类型"><img src="static/picture/mimetypes.png" alt="获取http消息头应用类型"/></a>
+                                <h3><a class="item-hd" href="mimetypes.html" title="获取http消息头应用类型">Mimetypes</a></h3>
+                                </div>
+                            <div class="item-bd">
+                                <div class="item-desc" title="根据文件名后缀获取http消息头应用类型">获取http消息头应用类型</div>
+                            </div>
+                            <div class="item-ft">
+                                <span class="item-link">ctf.ssleye.com</span>
+                                <a class="item-btn" href="mimetypes.html">进入</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-md3">
+                        <div class="item">
+                            <div class="item-inner">
+                                <div class="item-hd">
+                                    <a href="html_en.html" class="item-icon" title="HTML在线编解码"><img src="static/picture/html.png" alt="HTML在线编解码"/></a>
+                                    <h3><a class="item-hd" href="html_en.html" title="HTML在线编解码">HTML编码</a></h3>
+                                    </div>
+                                <div class="item-bd">
+                                    <div class="item-desc" title="Html">Html</div>
+                                </div>
+                                <div class="item-ft">
+                                    <span class="item-link">ctf.ssleye.com</span>
+                                    <a class="item-btn" href="html_en.html">进入</a>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="layui-col-md3">
+                        <div class="item">
+                            <div class="item-inner">
+                                <div class="item-hd">
+                                    <a href="escape.html" class="item-icon" title="Escape在线编解码"><img src="static/picture/escape.png" alt="Escape在线编解码"/></a>
+                                    <h3><a class="item-hd" href="escape.html" title="Escape在线编解码">Escape编码</a></h3>
+                                    </div>
+                                <div class="item-bd">
+                                    <div class="item-desc" title="Escape">Escape</div>
+                                </div>
+                                <div class="item-ft">
+                                    <span class="item-link">ctf.ssleye.com</span>
+                                    <a class="item-btn" href="escape.html">进入</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <div class="layui-col-md3">
+                        <div class="item">
+                            <div class="item-inner">
+                                <div class="item-hd">
+                                    <a href="tapcode.html" class="item-icon" title="敲击码"><img src="static/picture/tapcode.png" alt="敲击码"/></a>
+                                    <h3><a class="item-hd" href="tapcode.html" title="敲击码">敲击码</a></h3>
+                                    </div>
+                                <div class="item-bd">
+                                    <div class="item-desc" title="Tap code">Tap code</div>
+                                </div>
+                                <div class="item-ft">
+                                    <span class="item-link">ctf.ssleye.com</span>
+                                    <a class="item-btn" href="tapcode.html">进入</a>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <div class="layui-row layui-col-space10">
+                    <div class="layui-col-md3">
+                        <div class="item">
+                            <div class="item-inner">
+                                <div class="item-hd">
+                                    <a href="morse.html" class="item-icon" title="莫尔斯电码"><img src="static/picture/morse.png" alt="莫尔斯电码"/></a>
+                                    <h3><a class="item-hd" href="morse.html" title="莫尔斯电码">莫尔斯电码</a></h3>
+                                    </div>
+                                <div class="item-bd">
+                                    <div class="item-desc" title="Morse code">Morse code</div>
+                                </div>
+                                <div class="item-ft">
+                                    <span class="item-link">ctf.ssleye.com</span>
+                                    <a class="item-btn" href="morse.html">进入</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-md3">
+                        <div class="item">
+                            <div class="item-inner">
+                                <div class="item-hd">
+                                    <a href="hash.html" class="item-icon" title="哈希计算"><img src="static/picture/hash.png" alt="哈希计算"/></a>
+                                    <h3><a class="item-hd" href="hash.html" title="哈希计算">哈希计算</a></h3>
+                                    </div>
+                                <div class="item-bd">
+                                    <div class="item-desc" title="Hash">Hash</div>
+                                </div>
+                                <div class="item-ft">
+                                    <span class="item-link">ctf.ssleye.com</span>
+                                    <a class="item-btn" href="hash.html">进入</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-md3">
+                        <div class="item">
+                            <div class="item-inner">
+                                <div class="item-hd">
+                                    <a href="caes.html" class="item-icon" title="AES在线加解密"><img src="static/picture/aes.png" alt="AES在线加解密"/></a>
+                                    <h3><a class="item-hd" href="caes.html" title="AES在线加解密">AES加密</a></h3>
+                                    </div>
+                                <div class="item-bd">
+                                    <div class="item-desc" title="支持5种模式，5种填充">支持5种模式，5种填充</div>
+                                </div>
+                                <div class="item-ft">
+                                    <span class="item-link">ctf.ssleye.com</span>
+                                    <a class="item-btn" href="caes.html">进入</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-md3">
+                        <div class="item">
+                            <div class="item-inner">
+                                <div class="item-hd">
+                                    <a href="cdes.html" class="item-icon" title="DES在线加解密"><img src="static/picture/des.png" alt="DES在线加解密"/></a>
+                                    <h3><a class="item-hd" href="cdes.html" title="DES在线加解密">DES加密</a></h3>
+                                    </div>
+                                <div class="item-bd">
+                                    <div class="item-desc" title="支持5种模式，5种填充">支持5种模式，5种填充</div>
+                                </div>
+                                <div class="item-ft">
+                                    <span class="item-link">ctf.ssleye.com</span>
+                                    <a class="item-btn" href="cdes.html">进入</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="layui-row layui-col-space10">
+                <div class="layui-col-md3">
+                    <div class="item">
+                        <div class="item-inner">
+                            <div class="item-hd">
+                                <a href="tdes.html" class="item-icon" title="3DES在线加解密"><img src="static/picture/3des.png" alt="3DES在线加解密"/></a>
+                                <h3><a class="item-hd" href="tdes.html" title="3DES在线加解密">Terple DES加密</a></h3>
+                                </div>
+                            <div class="item-bd">
+                                <div class="item-desc" title="支持5种模式，5种填充">支持5种模式，5种填充</div>
+                            </div>
+                            <div class="item-ft">
+                                <span class="item-link">ctf.ssleye.com</span>
+                                <a class="item-btn" href="tdes.html">进入</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-md3">
+                    <div class="item">
+                        <div class="item-inner">
+                            <div class="item-hd">
+                                <a href="rc4.html" class="item-icon" title="RC4在线加解密"><img src="static/picture/rc4.png" alt="RC4在线加解密"/></a>
+                                <h3><a class="item-hd" href="rc4.html" title="RC4在线加解密">RC4加密</a></h3>
+                                </div>
+                            <div class="item-bd">
+                                <div class="item-desc" title="多种字符集、Base64输出">多种字符集、Base64输出</div>
+                            </div>
+                            <div class="item-ft">
+                                <span class="item-link">ctf.ssleye.com</span>
+                                <a class="item-btn" href="rc4.html">进入</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-md3">
+                    <div class="item">
+                        <div class="item-inner">
+                            <div class="item-hd">
+                                <a href="jinzhi.html" class="item-icon" title="进制转换"><img src="static/picture/int.png" alt="进制转换"/></a>
+                                <h3><a class="item-hd" href="jinzhi.html" title="进制转换">进制转换&nbsp;<span class="layui-badge-dot"></span></a></h3>
+                                </div>
+                            <div class="item-bd">
+                                <div class="item-desc" title="ASCII、任意进制转换">ASCII、任意进制转换</div>
+                            </div>
+                            <div class="item-ft">
+                                <span class="item-link">ctf.ssleye.com</span>
+                                <a class="item-btn" href="jinzhi.html">进入</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-md3">
+                    <div class="item">
+                        <div class="item-inner">
+                            <div class="item-hd">
+                                <a href="base36w.html" class="item-icon" title="Base36在线编解码"><img src="static/picture/base36.png" alt="Base36在线编解码"/></a>
+                                <h3><a class="item-hd" href="base36w.html" title="Base36在线编解码">Base36编码</a></h3>
+                                </div>
+                            <div class="item-bd">
+                                <div class="item-desc" title="Base36，支持整数">Base36，支持整数</div>
+                            </div>
+                            <div class="item-ft">
+                                <span class="item-link">ctf.ssleye.com</span>
+                                <a class="item-btn" href="base36w.html">进入</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div class="layui-row layui-col-space10">
+                <div class="layui-col-md3">
+                        <div class="item">
+                            <div class="item-inner">
+                                <div class="item-hd">
+                                    <a href="base58w.html" class="item-icon" title="Base58在线编解码"><img src="static/picture/base58.png" alt="Base58在线编解码"/></a>
+                                    <h3><a class="item-hd" href="base58w.html" title="Base58在线编解码">Base58编码&nbsp;<span class="layui-badge-dot"></span></a></h3>
+                                    </div>
+                                <div class="item-bd">
+                                    <div class="item-desc" title="字符母表，支持中文编码">字符母表，支持中文编码</div>
+                                </div>
+                                <div class="item-ft">
+                                    <span class="item-link">ctf.ssleye.com</span>
+                                    <a class="item-btn" href="base58w.html">进入</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-md3">
+                            <div class="item">
+                                <div class="item-inner">
+                                    <div class="item-hd">
+                                        <a href="base62.html" class="item-icon" title="Base62在线编解码"><img src="static/picture/base62.png" alt="Base58在线编解码"/></a>
+                                        <h3><a class="item-hd" href="base62.html" title="Base62在线编解码">Base62编码</a></h3>
+                                        </div>
+                                    <div class="item-bd">
+                                        <div class="item-desc" title="Base62，整数与字符串互转">Base62，整数与字符串互转</div>
+                                    </div>
+                                    <div class="item-ft">
+                                        <span class="item-link">ctf.ssleye.com</span>
+                                        <a class="item-btn" href="base62.html">进入</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-md3">
+                            <div class="item">
+                                <div class="item-inner">
+                                    <div class="item-hd">
+                                        <a href="base91.html" class="item-icon" title="Base91在线编解码"><img src="static/picture/base91.png" alt="Base58在线编解码"/></a>
+                                        <h3><a class="item-hd" href="base91.html" title="Base91在线编解码">Base91编码</a></h3>
+                                        </div>
+                                    <div class="item-bd">
+                                        <div class="item-desc" title="Base91，整数与字符串互转">Base91，整数与字符串互转</div>
+                                    </div>
+                                    <div class="item-ft">
+                                        <span class="item-link">ctf.ssleye.com</span>
+                                        <a class="item-btn" href="base91.html">进入</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-md3">
+                            <div class="item">
+                                <div class="item-inner">
+                                    <div class="item-hd">
+                                        <a href="pub_asys.html" class="item-icon" title="公钥解析"><img src="static/picture/pubkey.png" alt="公钥解析"/></a>
+                                        <h3><a class="item-hd" href="pub_asys.html" title="公钥解析">公钥解析</a></h3>
+                                        </div>
+                                    <div class="item-bd">
+                                        <div class="item-desc" title="获取加密类型、n、e等参数">获取加密类型、n、e等参数</div>
+                                    </div>
+                                    <div class="item-ft">
+                                        <span class="item-link">ctf.ssleye.com</span>
+                                        <a class="item-btn" href="pub_asys.html">进入</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+        </div>
+        <div class="layui-row layui-col-space10">
+            <div class="layui-col-md3">
+                    <div class="item">
+                        <div class="item-inner">
+                            <div class="item-hd">
+                                <a href="priv_asys.html" class="item-icon" title="提取RS私钥的构成元素，如n、e、d、p、q"><img src="static/picture/rsa_asys.png" alt="提取RS私钥的构成元素，如n、e、d、p、q"/></a>
+                                <h3><a class="item-hd" href="priv_asys.html" title="提取RS私钥的构成元素，如n、e、d、p、q">RSA私钥解析</a></h3>
+                                </div>
+                            <div class="item-bd">
+                                <div class="item-desc" title="提取RS私钥的构成元素，如n、e、d、p、q">提取私钥的n、e、d、p、q</div>
+                            </div>
+                            <div class="item-ft">
+                                <span class="item-link">ctf.ssleye.com</span>
+                                <a class="item-btn" href="priv_asys.html">进入</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-col-md3">
+                    <div class="item">
+                        <div class="item-inner">
+                            <div class="item-hd">
+                                <a href="base92.html" class="item-icon" title="Base92在线编解码"><img src="static/picture/base92.png" alt="Base92在线编解码"/></a>
+                                <h3><a class="item-hd" href="base92.html" title="Base92在线编解码">Base92编码</a></h3>
+                                </div>
+                            <div class="item-bd">
+                                <div class="item-desc" title="Base92在线编解码">Base92在线编码、解码</div>
+                            </div>
+                            <div class="item-ft">
+                                <span class="item-link">ctf.ssleye.com</span>
+                                <a class="item-btn" href="base92.html">进入</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        <div class="layui-col-md3">
+                    <div class="item">
+                        <div class="item-inner">
+                            <div class="item-hd">
+                                <a href="base85.html" class="item-icon" title="Base85在线编解码"><img src="static/picture/base85.png" alt="Base85在线编解码"/></a>
+                                <h3><a class="item-hd" href="base85.html" title="Base85在线编解码">Base85编码&nbsp;<span class="layui-badge-dot"></span></a></h3>
+                                </div>
+                            <div class="item-bd">
+                                <div class="item-desc" title="Base85在线编解码">Base85在线编码、解码</div>
+                            </div>
+                            <div class="item-ft">
+                                <span class="item-link">ctf.ssleye.com</span>
+                                <a class="item-btn" href="base85.html">进入</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        <div class="layui-col-md3">
+                    <div class="item">
+                        <div class="item-inner">
+                            <div class="item-hd">
+                                <a href="cencode.html" class="item-icon" title="ASCII编码转换"><img src="static/picture/unicode.png" alt="ASCII编码转换"/></a>
+                                <h3><a class="item-hd" href="cencode.html" title="ASCII编码转换">ASCII编码转换</a></h3>
+                                </div>
+                            <div class="item-bd">
+                                <div class="item-desc" title="在线ASCII转Unicode、Native、UTF-16、UTF-32">Unicode、UTF-16、UTF-32</div>
+                            </div>
+                            <div class="item-ft">
+                                <span class="item-link">ctf.ssleye.com</span>
+                                <a class="item-btn" href="cencode.html">进入</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    </div>
+            <div class="layui-row" style="margin-top:20px;">
+                <div class="layui-col-md4">&#12288;</div>
+                    <div class="layui-col-md4" style="text-align:center;">
+                        <fieldset class="layui-elem-field layui-field-title" style="margin:0 0 20px;">
+                            <legend class="zhong_biaoti_index" align="center"><h2>CTF算法</h2></legend>
+                        </fieldset>
+                    </div>
+                <div class="layui-col-md4"></div>
+            </div>
+            <div class="layui-row layui-col-space10">
+                    <div class="layui-col-md3">
+                            <div class="item">
+                                <div class="item-inner">
+                                    <div class="item-hd">
+                                        <a href="adfgx.html" class="item-icon" title="ADFG Cipher"><img src="static/picture/adfg.png" alt="ADFG Cipher"/></a>
+                                        <h3><a class="item-hd" href="adfgx.html" title="ADFG Cipher">ADFGX密码</a></h3>
+                                        </div>
+                                    <div class="item-bd">
+                                        <div class="item-desc" title="ADFG Cipher">ADFG Cipher</div>
+                                    </div>
+                                    <div class="item-ft">
+                                        <span class="item-link">ctf.ssleye.com</span>
+                                        <a class="item-btn" href="adfgx.html">进入</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-md3">
+                                <div class="item">
+                                        <div class="item-inner">
+                                            <div class="item-hd">
+                                                <a href="adfgvx.html" class="item-icon" title="ADFGVX Cipher"><img src="static/picture/adfgv.png" alt="ADFGVX Cipher"/></a>
+                                                <h3><a class="item-hd" href="adfgvx.html" title="ADFGVX Cipher">ADFGVX密码</a></h3>
+                                                </div>
+                                            <div class="item-bd">
+                                                <div class="item-desc" title="ADFGVX Cipher">ADFGVX Cipher</div>
+                                            </div>
+                                            <div class="item-ft">
+                                                <span class="item-link">ctf.ssleye.com</span>
+                                                <a class="item-btn" href="adfgvx.html">进入</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                        </div>
+                        <div class="layui-col-md3">
+                                <div class="item">
+                                        <div class="item-inner">
+                                            <div class="item-hd">
+                                                <a href="affine.html" class="item-icon" title="Affine Cipher"><img src="static/picture/affine.png" alt="Affine Cipher"/></a>
+                                                <h3><a class="item-hd" href="affine.html" title="Affine Cipher">仿射密码</a></h3>
+                                                </div>
+                                            <div class="item-bd">
+                                                <div class="item-desc" title="Affine Cipher">Affine Cipher</div>
+                                            </div>
+                                            <div class="item-ft">
+                                                <span class="item-link">ctf.ssleye.com</span>
+                                                <a class="item-btn" href="affine.html">进入</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                        </div>
+                        <div class="layui-col-md3">
+                                <div class="item">
+                                        <div class="item-inner">
+                                            <div class="item-hd">
+                                                <a href="autokey.html" class="item-icon" title="Autokey Cipher"><img src="static/picture/autokey.png" alt="Autokey Cipher"/></a>
+                                                <h3><a class="item-hd" href="autokey.html" title="Autokey Cipher">自动密钥密码</a></h3>
+                                                </div>
+                                            <div class="item-bd">
+                                                <div class="item-desc" title="Autokey Cipher">Autokey Cipher</div>
+                                            </div>
+                                            <div class="item-ft">
+                                                <span class="item-link">ctf.ssleye.com</span>
+                                                <a class="item-btn" href="autokey.html">进入</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                        </div>
+            </div>
+            <div class="layui-row layui-col-space10">
+                    <div class="layui-col-md3">
+                            <div class="item">
+                                <div class="item-inner">
+                                    <div class="item-hd">
+                                        <a href="atbash.html" class="item-icon" title="Atbash Cipher"><img src="static/picture/atbash.png" alt="Atbash Cipher"/></a>
+                                        <h3><a class="item-hd" href="atbash.html" title="Atbash Cipher">埃特巴什码</a></h3>
+                                        </div>
+                                    <div class="item-bd">
+                                        <div class="item-desc" title="Atbash Cipher">Atbash Cipher</div>
+                                    </div>
+                                    <div class="item-ft">
+                                        <span class="item-link">ctf.ssleye.com</span>
+                                        <a class="item-btn" href="atbash.html">进入</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-md3">
+                                <div class="item">
+                                        <div class="item-inner">
+                                            <div class="item-hd">
+                                                <a href="beaufort.html" class="item-icon" title="Beaufort Cipher"><img src="static/picture/beaufort.png" alt="Beaufort Cipher"/></a>
+                                                <h3><a class="item-hd" href="beaufort.html" title="Beaufort Cipher">博福特密码</a></h3>
+                                                </div>
+                                            <div class="item-bd">
+                                                <div class="item-desc" title="Beaufort Cipher">Beaufort Cipher</div>
+                                            </div>
+                                            <div class="item-ft">
+                                                <span class="item-link">ctf.ssleye.com</span>
+                                                <a class="item-btn" href="beaufort.html">进入</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                        </div>
+                        <div class="layui-col-md3">
+                                <div class="item">
+                                        <div class="item-inner">
+                                            <div class="item-hd">
+                                                <a href="bifid.html" class="item-icon" title="Bifid Cipher"><img src="static/picture/bifid.png" alt="Bifid Cipher"/></a>
+                                                <h3><a class="item-hd" href="bifid.html" title="Bifid Cipher">双密码</a></h3>
+                                                </div>
+                                            <div class="item-bd">
+                                                <div class="item-desc" title="Bifid Cipher">Bifid Cipher</div>
+                                            </div>
+                                            <div class="item-ft">
+                                                <span class="item-link">ctf.ssleye.com</span>
+                                                <a class="item-btn" href="bifid.html">进入</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                        </div>
+                        <div class="layui-col-md3">
+                                <div class="item">
+                                        <div class="item-inner">
+                                            <div class="item-hd">
+                                                <a href="caesar.html" class="item-icon" title="Caesar Cipher"><img src="static/picture/caesar.png" alt="Caesar Cipher"/></a>
+                                                <h3><a class="item-hd" href="caesar.html" title="Caesar Cipher">凯撒密码</a></h3>
+                                                </div>
+                                            <div class="item-bd">
+                                                <div class="item-desc" title="Caesar Cipher">Caesar Cipher</div>
+                                            </div>
+                                            <div class="item-ft">
+                                                <span class="item-link">ctf.ssleye.com</span>
+                                                <a class="item-btn" href="caesar.html">进入</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                        </div>
+            </div>
+            <div class="layui-row layui-col-space10">
+                    <div class="layui-col-md3">
+                            <div class="item">
+                                <div class="item-inner">
+                                    <div class="item-hd">
+                                        <a href="colum.html" class="item-icon" title="Columnar Transposition Cipher"><img src="static/picture/columnar.png" alt="Columnar Transposition Cipher"/></a>
+                                        <h3><a class="item-hd" href="colum.html" title="Columnar Transposition Cipher">列移位密码</a></h3>
+                                        </div>
+                                    <div class="item-bd">
+                                        <div class="item-desc" title="Columnar Transposition Cipher">Columnar Transposition Cipher</div>
+                                    </div>
+                                    <div class="item-ft">
+                                        <span class="item-link">ctf.ssleye.com</span>
+                                        <a class="item-btn" href="colum.html">进入</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-md3">
+                                <div class="item">
+                                        <div class="item-inner">
+                                            <div class="item-hd">
+                                                <a href="#" class="item-icon" title="Enigma M3 Cipher"><img src="static/picture/enigma.png" alt="Enigma M3 Cipher"/></a>
+                                                <h3><a class="item-hd" href="#" title="Enigma M3 Cipher">恩尼格玛密码</a></h3>
+                                                </div>
+                                            <div class="item-bd">
+                                                <div class="item-desc" title="Enigma M3 Cipher">Enigma M3 Cipher</div>
+                                            </div>
+                                            <div class="item-ft">
+                                                <span class="item-link">ctf.ssleye.com</span>
+                                                <a class="item-btn" href="#">开发中</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                        </div>
+                        <div class="layui-col-md3">
+                                <div class="item">
+                                        <div class="item-inner">
+                                            <div class="item-hd">
+                                                <a href="four.html" class="item-icon" title="Foursquare Cipher"><img src="static/picture/foursquare.png" alt="Foursquare Cipher"/></a>
+                                                <h3><a class="item-hd" href="four.html" title="Foursquare Cipher">四方密码</a></h3>
+                                                </div>
+                                            <div class="item-bd">
+                                                <div class="item-desc" title="Foursquare Cipher">Foursquare Cipher</div>
+                                            </div>
+                                            <div class="item-ft">
+                                                <span class="item-link">ctf.ssleye.com</span>
+                                                <a class="item-btn" href="four.html">进入</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                        </div>
+                        <div class="layui-col-md3">
+                                <div class="item">
+                                        <div class="item-inner">
+                                            <div class="item-hd">
+                                                <a href="gronsfeld.html" class="item-icon" title="Gronsfeld Cipher"><img src="static/picture/gronsfeld.png" alt="Gronsfeld Cipher"/></a>
+                                                <h3><a class="item-hd" href="gronsfeld.html" title="Gronsfeld Cipher">Gronsfeld密码</a></h3>
+                                                </div>
+                                            <div class="item-bd">
+                                                <div class="item-desc" title="Gronsfeld Cipher">Gronsfeld Cipher</div>
+                                            </div>
+                                            <div class="item-ft">
+                                                <span class="item-link">ctf.ssleye.com</span>
+                                                <a class="item-btn" href="gronsfeld.html">进入</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                        </div>
+            </div>
+            <div class="layui-row layui-col-space10">
+                    <div class="layui-col-md3">
+                            <div class="item">
+                                <div class="item-inner">
+                                    <div class="item-hd">
+                                        <a href="#" class="item-icon" title="M-209 Cipher"><img src="static/picture/m209.png" alt="M-209 Cipher"/></a>
+                                        <h3><a class="item-hd" href="#" title="M-209 Cipher">便携式机械密码</a></h3>
+                                        </div>
+                                    <div class="item-bd">
+                                        <div class="item-desc" title="M-209 Cipher">M-209 Cipher</div>
+                                    </div>
+                                    <div class="item-ft">
+                                        <span class="item-link">ctf.ssleye.com</span>
+                                        <a class="item-btn" href="#">开发中</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-md3">
+                                <div class="item">
+                                        <div class="item-inner">
+                                            <div class="item-hd">
+                                                <a href="playfair.html" class="item-icon" title="Playfair Cipher"><img src="static/picture/playfair.png" alt="Playfair Cipher"/></a>
+                                                <h3><a class="item-hd" href="playfair.html" title="Playfair Cipher">普莱菲尔密码</a></h3>
+                                                </div>
+                                            <div class="item-bd">
+                                                <div class="item-desc" title="Playfair Cipher">Playfair Cipher</div>
+                                            </div>
+                                            <div class="item-ft">
+                                                <span class="item-link">ctf.ssleye.com</span>
+                                                <a class="item-btn" href="playfair.html">进入</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                        </div>
+                        <div class="layui-col-md3">
+                                <div class="item">
+                                        <div class="item-inner">
+                                            <div class="item-hd">
+                                                <a href="#" class="item-icon" title="Polybius Square Cipher"><img src="static/picture/polybius.png" alt="Polybius Square Cipher"/></a>
+                                                <h3><a class="item-hd" href="#" title="Polybius Square Cipher">波利比奥斯方阵密码</a></h3>
+                                                </div>
+                                            <div class="item-bd">
+                                                <div class="item-desc" title="Polybius Square Cipher">Polybius Square Cipher</div>
+                                            </div>
+                                            <div class="item-ft">
+                                                <span class="item-link">ctf.ssleye.com</span>
+                                                <a class="item-btn" href="#">开发中</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                        </div>
+                        <div class="layui-col-md3">
+                                <div class="item">
+                                        <div class="item-inner">
+                                            <div class="item-hd">
+                                                <a href="porta.html" class="item-icon" title="Porta Cipher"><img src="static/picture/porta.png" alt="Porta Cipher"/></a>
+                                                <h3><a class="item-hd" href="porta.html" title="Porta Cipher">Porta密码</a></h3>
+                                                </div>
+                                            <div class="item-bd">
+                                                <div class="item-desc" title="Porta Cipher">Porta Cipher</div>
+                                            </div>
+                                            <div class="item-ft">
+                                                <span class="item-link">ctf.ssleye.com</span>
+                                                <a class="item-btn" href="porta.html">进入</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                        </div>
+            </div>
+            <div class="layui-row layui-col-space10">
+                    <div class="layui-col-md3">
+                            <div class="item">
+                                <div class="item-inner">
+                                    <div class="item-hd">
+                                        <a href="railfence.html" class="item-icon" title="Railfence Cipher"><img src="static/picture/railfence.png" alt="Railfence Cipher"/></a>
+                                        <h3><a class="item-hd" href="railfence.html" title="Railfence Cipher">栅栏密码</a></h3>
+                                        </div>
+                                    <div class="item-bd">
+                                        <div class="item-desc" title="Railfence Cipher">Railfence Cipher</div>
+                                    </div>
+                                    <div class="item-ft">
+                                        <span class="item-link">ctf.ssleye.com</span>
+                                        <a class="item-btn" href="railfence.html">进入</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-md3">
+                                <div class="item">
+                                        <div class="item-inner">
+                                            <div class="item-hd">
+                                                <a href="rot13.html" class="item-icon" title="Rot13 Cipher"><img src="static/picture/rot13.png" alt="Rot13 Cipher"/></a>
+                                                <h3><a class="item-hd" href="rot13.html" title="Rot13 Cipher">Rot13密码</a></h3>
+                                                </div>
+                                            <div class="item-bd">
+                                                <div class="item-desc" title="Rot13 Cipher">Rot13 Cipher</div>
+                                            </div>
+                                            <div class="item-ft">
+                                                <span class="item-link">ctf.ssleye.com</span>
+                                                <a class="item-btn" href="rot13.html">进入</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                        </div>
+                        <div class="layui-col-md3">
+                                <div class="item">
+                                        <div class="item-inner">
+                                            <div class="item-hd">
+                                                <a href="simple.html" class="item-icon" title="Simple Substitution Cipher"><img src="static/picture/simple.png" alt="Simple Substitution Cipher"/></a>
+                                                <h3><a class="item-hd" href="simple.html" title="Simple Substitution Cipher">简单换位密码</a></h3>
+                                                </div>
+                                            <div class="item-bd">
+                                                <div class="item-desc" title="Simple Substitution Cipher">Simple Substitution Cipher</div>
+                                            </div>
+                                            <div class="item-ft">
+                                                <span class="item-link">ctf.ssleye.com</span>
+                                                <a class="item-btn" href="simple.html">进入</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                        </div>
+                        <div class="layui-col-md3">
+                                <div class="item">
+                                        <div class="item-inner">
+                                            <div class="item-hd">
+                                                <a href="vigenere.html" class="item-icon" title="Vigenere Cipher"><img src="static/picture/vigenere.png" alt="Vigenere Cipher"/></a>
+                                                <h3><a class="item-hd" href="vigenere.html" title="Vigenere Cipher">维吉尼亚密码</a></h3>
+                                                </div>
+                                            <div class="item-bd">
+                                                <div class="item-desc" title="Vigenere Cipher">Vigenere Cipher</div>
+                                            </div>
+                                            <div class="item-ft">
+                                                <span class="item-link">ctf.ssleye.com</span>
+                                                <a class="item-btn" href="vigenere.html">进入</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                        </div>
+            </div>
+            <div class="layui-row layui-col-space10">
+                <div class="layui-col-md3 layui-hide-xs">
+                        <div class="item">
+                            <div class="item-inner">
+                                <div class="item-hd">
+                                    <a href="pigpen.html" class="item-icon" title="Pigpen Cipher"><img src="static/picture/pig.png" alt="Pigpen Cipher"/></a>
+                                    <h3><a class="item-hd" href="pigpen.html" title="Pigpen Cipher">猪圈密码</a></h3>
+                                    </div>
+                                <div class="item-bd">
+                                    <div class="item-desc" title="Pigpen Cipher">Pigpen Cipher</div>
+                                </div>
+                                <div class="item-ft">
+                                    <span class="item-link">ctf.ssleye.com</span>
+                                    <a class="item-btn" href="pigpen.html">进入</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-md3 layui-hide-lg layui-hide-md layui-hide-sm">
+                        <div class="item">
+                            <div class="item-inner">
+                                <div class="item-hd">
+                                    <a href="yd_pigpen.html" class="item-icon" title="Pigpen Cipher"><img src="static/picture/pig.png" alt="Pigpen Cipher"/></a>
+                                    <h3><a class="item-hd" href="yd_pigpen.html" title="Pigpen Cipher">猪圈密码</a></h3>
+                                    </div>
+                                <div class="item-bd">
+                                    <div class="item-desc" title="Pigpen Cipher">Pigpen Cipher</div>
+                                </div>
+                                <div class="item-ft">
+                                    <span class="item-link">ctf.ssleye.com</span>
+                                    <a class="item-btn" href="yd_pigpen.html">进入</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-md3">
+                            <div class="item">
+                                    <div class="item-inner">
+                                        <div class="item-hd">
+                                            <a href="baconian.html" class="item-icon" title="Baconian Cipher"><img src="static/picture/peigen.png" alt="Baconian Cipher"/></a>
+                                            <h3><a class="item-hd" href="baconian.html" title="Baconian Cipher">培根密码</a></h3>
+                                            </div>
+                                        <div class="item-bd">
+                                            <div class="item-desc" title="Baconian Cipher">Baconian Cipher</div>
+                                        </div>
+                                        <div class="item-ft">
+                                            <span class="item-link">ctf.ssleye.com</span>
+                                            <a class="item-btn" href="baconian.html">进入</a>
+                                        </div>
+                                    </div>
+                                </div>
+                    </div>
+                    <div class="layui-col-md3">
+                            <div class="item">
+                                    <div class="item-inner">
+                                        <div class="item-hd">
+                                            <a href="runkey.html" class="item-icon" title="Running Key Cipher"><img src="static/picture/runkey.png" alt="Running Key Cipher"/></a>
+                                            <h3><a class="item-hd" href="runkey.html" title="Running Key Cipher">滚动密钥密码</a></h3>
+                                            </div>
+                                        <div class="item-bd">
+                                            <div class="item-desc" title="Running Key Cipher">Running Key Cipher</div>
+                                        </div>
+                                        <div class="item-ft">
+                                            <span class="item-link">ctf.ssleye.com</span>
+                                            <a class="item-btn" href="runkey.html">进入</a>
+                                        </div>
+                                    </div>
+                                </div>
+                    </div>
+                    <div class="layui-col-md3">
+                            <div class="item">
+                                    <div class="item-inner">
+                                        <div class="item-hd">
+                                            <a href="#" class="item-icon" title="Hill Cipher"><img src="static/picture/hill.png" alt="Hill Cipher"/></a>
+                                            <h3><a class="item-hd" href="#" title="Hill Cipher">希尔密码</a></h3>
+                                            </div>
+                                        <div class="item-bd">
+                                            <div class="item-desc" title="Hill Cipher">Hill Cipher</div>
+                                        </div>
+                                        <div class="item-ft">
+                                            <span class="item-link">ctf.ssleye.com</span>
+                                            <a class="item-btn" href="#">开发中</a>
+                                        </div>
+                                    </div>
+                                </div>
+                    </div>
+        </div>
+        <div class="layui-row layui-col-space10">
+            <div class="layui-col-md3">
+                    <div class="item">
+                        <div class="item-inner">
+                            <div class="item-hd">
+                                <a href="keyword.html" class="item-icon" title="Keyword Cipher"><img src="static/picture/keyword.png" alt="Keyword Cipher"/></a>
+                                <h3><a class="item-hd" href="keyword.html" title="Keyword Cipher">关键字密码</a></h3>
+                                </div>
+                            <div class="item-bd">
+                                <div class="item-desc" title="Keyword Cipher">Keyword Cipher</div>
+                            </div>
+                            <div class="item-ft">
+                                <span class="item-link">ctf.ssleye.com</span>
+                                <a class="item-btn" href="keyword.html">进入</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-md3">
+                    <div class="item">
+                        <div class="item-inner">
+                            <div class="item-hd">
+                                <a href="a1z26.html" class="item-icon" title="A1z26 Cipher"><img src="static/picture/a1z26.png" alt="A1z26 Cipher"/></a>
+                                <h3><a class="item-hd" href="a1z26.html" title="A1z26 Cipher">A1z26密码&nbsp;<span class="layui-badge-dot"></span></a></h3>
+                                </div>
+                            <div class="item-bd">
+                                <div class="item-desc" title="A1z26 Cipher">A1z26 Cipher</div>
+                            </div>
+                            <div class="item-ft">
+                                <span class="item-link">ctf.ssleye.com</span>
+                                <a class="item-btn" href="a1z26.html">进入</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    </div>
+            <div class="layui-row" style="margin-top:20px;">
+                <div class="layui-col-md4">&#12288;</div>
+                <div class="layui-col-md4" style="text-align:center;">
+                    <fieldset class="layui-elem-field layui-field-title" style="margin:0 0 20px;">
+                        <legend class="zhong_biaoti_index" align="center"><h2>CTF杂项</h2></legend>
+                    </fieldset>
+                </div>
+                <div class="layui-col-md4"></div>
+            </div>
+            <div class="layui-row layui-col-space10">
+                    <div class="layui-col-md3">
+                            <div class="item">
+                                <div class="item-inner">
+                                    <div class="item-hd">
+                                        <a href="xxencode.html" class="item-icon" title="XXencode"><img src="static/picture/xxencode.png" alt="XXencode"/></a>
+                                        <h3><a class="item-hd" href="xxencode.html" title="XXencode">XXencode&nbsp;<span class="layui-badge-dot"></span></a></h3>
+                                        </div>
+                                    <div class="item-bd">
+                                        <div class="item-desc" title="XXencode">XXencode</div>
+                                    </div>
+                                    <div class="item-ft">
+                                        <span class="item-link">ctf.ssleye.com</span>
+                                        <a class="item-btn" href="xxencode.html">进入</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-md3">
+                                <div class="item">
+                                        <div class="item-inner">
+                                            <div class="item-hd">
+                                                <a href="uu.html" class="item-icon" title="UUencode"><img src="static/picture/uuencode.png" alt="UUencode"/></a>
+                                                <h3><a class="item-hd" href="uu.html" title="UUencode">UUencode</a></h3>
+                                                </div>
+                                            <div class="item-bd">
+                                                <div class="item-desc" title="UUencode">UUencode</div>
+                                            </div>
+                                            <div class="item-ft">
+                                                <span class="item-link">ctf.ssleye.com</span>
+                                                <a class="item-btn" href="uu.html">进入</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                        </div>
+                        <div class="layui-col-md3">
+                                <div class="item">
+                                        <div class="item-inner">
+                                            <div class="item-hd">
+                                                <a href="ppencode.html" class="item-icon" title="PPencode"><img src="static/picture/ppencode.png" alt="PPencode"/></a>
+                                                <h3><a class="item-hd" href="ppencode.html" title="PPencode">PPencode</a></h3>
+                                                </div>
+                                            <div class="item-bd">
+                                                <div class="item-desc" title="PPencode">PPencode</div>
+                                            </div>
+                                            <div class="item-ft">
+                                                <span class="item-link">ctf.ssleye.com</span>
+                                                <a class="item-btn" href="ppencode.html">进入</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                        </div>
+                        <div class="layui-col-md3">
+                                <div class="item">
+                                        <div class="item-inner">
+                                            <div class="item-hd">
+                                                <a href="aaencode.html" class="item-icon" title="AAencode"><img src="static/picture/aaencode.png" alt="AAencode"/></a>
+                                                <h3><a class="item-hd" href="aaencode.html" title="AAencode">AAencode</a></h3>
+                                            </div>
+                                            <div class="item-bd">
+                                                <div class="item-desc" title="AAencode">AAencode</div>
+                                            </div>
+                                            <div class="item-ft">
+                                                <span class="item-link">ctf.ssleye.com</span>
+                                                <a class="item-btn" href="aaencode.html">进入</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                        </div>
+            </div>
+            <div class="layui-row layui-col-space10">
+                    <div class="layui-col-md3">
+                            <div class="item">
+                                <div class="item-inner">
+                                    <div class="item-hd">
+                                        <a href="jjencode.html" class="item-icon" title="JJencode"><img src="static/picture/jjencode.png" alt="JJencode"/></a>
+                                        <h3><a class="item-hd" href="jjencode.html" title="JJencode">JJencode</a></h3>
+                                        </div>
+                                    <div class="item-bd">
+                                        <div class="item-desc" title="JJencode">JJencode</div>
+                                    </div>
+                                    <div class="item-ft">
+                                        <span class="item-link">ctf.ssleye.com</span>
+                                        <a class="item-btn" href="jjencode.html">进入</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-md3">
+                                <div class="item">
+                                        <div class="item-inner">
+                                            <div class="item-hd">
+                                                <a href="jsfuck.html" class="item-icon" title="JSfuck"><img src="static/picture/jsfuck.png" alt="JSfuck"/></a>
+                                                <h3><a class="item-hd" href="jsfuck.html" title="JSfuck">JSfuck</a></h3>
+                                                </div>
+                                            <div class="item-bd">
+                                                <div class="item-desc" title="JSfuck，玩一下">JSfuck，玩一下</div>
+                                            </div>
+                                            <div class="item-ft">
+                                                <span class="item-link">ctf.ssleye.com</span>
+                                                <a class="item-btn" href="jsfuck.html">进入</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                        </div>
+                        <div class="layui-col-md3">
+                                <div class="item">
+                                        <div class="item-inner">
+                                            <div class="item-hd">
+                                                <a href="brain.html" class="item-icon" title="Brainfuck"><img src="static/picture/brainfuck.png" alt="Brainfuck"/></a>
+                                                <h3><a class="item-hd" href="brain.html" title="Brainfuck">Brainfuck</a></h3>
+                                                </div>
+                                            <div class="item-bd">
+                                                <div class="item-desc" title="Brainfuck，玩一下">Brainfuck，玩一下</div>
+                                            </div>
+                                            <div class="item-ft">
+                                                <span class="item-link">ctf.ssleye.com</span>
+                                                <a class="item-btn" href="brain.html">进入</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                        </div>
+            </div>
+            <div class="layui-row layui-col-space10">
+                <div class="layui-col-md3">
+                        <div class="item">
+                            <div class="item-inner">
+                                <div class="item-hd">
+                                    <a href="bubble.html" class="item-icon" title="Babble"><img src="static/picture/bubble.png" title="Babble"/></a>
+                                    <h3><a class="item-hd" href="bubble.html" title="Babble">BubbleBabble&nbsp;<span class="layui-badge-dot"></span></a></h3>
+                                    </div>
+                                <div class="item-bd">
+                                    <div class="item-desc" title="BubbleBabble">BubbleBabble</div>
+                                </div>
+                                <div class="item-ft">
+                                    <span class="item-link">ctf.ssleye.com</span>
+                                    <a class="item-btn" href="bubble.html">进入</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-md3">
+                        <div class="item">
+                            <div class="item-inner">
+                                <div class="item-hd">
+                                    <a href="handycode.html" class="item-icon" title="Handycode"><img src="static/picture/handycode.png" alt="Handycode"/></a>
+                                    <h3><a class="item-hd" href="handycode.html" title="Handycode">Handycode</a></h3>
+                                </div>
+                                <div class="item-bd">
+                                    <div class="item-desc" title="Handycode">Handycode</div>
+                                </div>
+                                <div class="item-ft">
+                                    <span class="item-link">ctf.ssleye.com</span>
+                                    <a class="item-btn" href="handycode.html">进入</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-md3">
+                        <div class="item">
+                            <div class="item-inner">
+                                <div class="item-hd">
+                                    <a href="punycode.html" class="item-icon" title="Punycode"><img src="static/picture/puny.png" alt="Punycode"/></a>
+                                    <h3><a class="item-hd" href="punycode.html">Punycode&nbsp;<span class="layui-badge-dot"></span></a></h3>
+                                </div>
+                                <div class="item-bd">
+                                    <div class="item-desc" title="Punycode">Punycode</div>
+                                </div>
+                                <div class="item-ft">
+                                    <span class="item-link">ctf.ssleye.com</span>
+                                    <a class="item-btn" href="punycode.html">进入</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-md3">
+                            <div class="item">
+                                <div class="item-inner">
+                                    <div class="item-hd">
+                                        <a href="#" class="item-icon" title="Poemcode"><img src="static/picture/poem.png" alt="Poemcode"/></a>
+                                        <h3><a class="item-hd" href="#">Poemcode</a></h3>
+                                    </div>
+                                    <div class="item-bd">
+                                        <div class="item-desc" title="Poemcode">Poemcode</div>
+                                    </div>
+                                    <div class="item-ft">
+                                        <span class="item-link">ctf.ssleye.com</span>
+                                        <a class="item-btn" href="#">开发中</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+        </div>
+        <div class="layui-row layui-col-space10">
+            <div class="layui-col-md3">
+                    <div class="item">
+                        <div class="item-inner">
+                            <div class="item-hd">
+                                <a href="web_socket.html" class="item-icon" title="在线WebSocket链路测试，发送数据"><img src="static/picture/websocket.png" alt="在线WebSocket链路测试，发送数据"/></a>
+                                <h3><a class="item-hd" href="web_socket.html" title="在线WebSocket链路测试，发送数据">WebSocket测试&nbsp;<span class="layui-badge-dot"></span></a></h3>
+                                </div>
+                            <div class="item-bd">
+                                <div class="item-desc" title="在线WebSocket链路测试，发送数据">WebSocket链路测试，发送数据</div>
+                            </div>
+                            <div class="item-ft">
+                                <span class="item-link">ctf.ssleye.com</span>
+                                <a class="item-btn" href="web_socket.html">进入</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-md3">
+                    <div class="item">
+                        <div class="item-inner">
+                            <div class="item-hd">
+                                <a href="http_head.html" class="item-icon" title="查看请求的响应头信息，支持HTTP、HTTPS"><img src="static/picture/http_head.png" alt="查看请求的响应头信息，支持HTTP、HTTPS"/></a>
+                                <h3><a class="item-hd" href="http_head.html" title="查看请求的响应头信息，支持HTTP、HTTPS">HTTP(S)响应头查看</a></h3>
+                                </div>
+                            <div class="item-bd">
+                                <div class="item-desc" title="查看请求的响应头信息，支持HTTP、HTTPS">查看请求的响应头信息</div>
+                            </div>
+                            <div class="item-ft">
+                                <span class="item-link">ctf.ssleye.com</span>
+                                <a class="item-btn" href="http_head.html">进入</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        </div>
+
+<!--        <div class="div_footer">
+                <div class="layui-row layui-hide-xs">
+                    <div class="layui-col-md2">&nbsp;</div>
+                    <div class="layui-col-md2">
+                        <div class="new_footer">
+                        <span>网站相关</span>
+                        <ul>
+                            <li><a href="abort.html">关于网站</a></li>
+                            <li><a href="#">导航地图</a></li>
+                            <li><a href="support.html">小额赞助</a></li>
+                            <li><a href="log.html">更新日志&nbsp;<span class="layui-badge-dot"></span></a></li>
+                        </ul>
+                        </div>
+                    </div>
+                    <div class="layui-col-md2">
+                            <div class="new_footer">
+                                <span>其他项目</span>
+                                <ul>
+                                    <li><a href="http://www.ssleye.com/" target="_blank">SSL在线工具</a></li>
+                                    <li><a href="http://www.ssleye.com/freessl.html" target="_blank">Let's Encrypt免费证书</a></li>
+                                    <li><a href="http://scan.ssleye.com/" target="_blank">SSL漏洞在线检测工具</a></li>
+                                    <li><a href="#" target="_blank">SSL链路分析</a></li>
+                                </ul>
+                            </div>
+                    </div>
+                    <div class="layui-col-md2">
+                        <div class="new_footer">
+                            <span>合作交流</span>
+                            <ul>
+                                <li>Email：wossl33@163.com</li>
+                                <li>技术交流群：364788699</li>
+                                <li>洽谈合作QQ：1521770894</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="layui-col-md2">
+                        <div class="new_footer">
+                            <span>友情链接</span>
+                            <ul>
+                                <li><a href="http://www.egouz.com/tools/" target="_blank">在线工具大全</a></li>
+                                <li><a href="http://www.beejson.com/" target="_blank">beejson在线工具</a></li>
+                                <li><a href="http://www.whaledu.com/" target="_blank">蓝鲸安全</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="layui-col-md2">
+                        <div class="new_footer">
+                            <span>友情链接</span>
+                            <ul>
+                                <li><a href="http://www.nicetool.net/" target="_blank">NiceTool在线工具</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-row">
+                    <div class="second_footer">
+                        © 2018 <span style="color:#009688">CTFcode</span>&nbsp;-&nbsp;<a href="http://www.miitbeian.gov.cn/" target="_blank">豫ICP备18004494号</a>&nbsp;-&nbsp;当前版本：<span style="color:#009688">v2.2.4</span>
+                    </div>
+                </div>
+        </div>-->
+            <script src="static/js/layui.js"></script>
+
+    <script>
+        //JavaScript代码区域
+        layui.use(['element','util'], function(){
+            var element = layui.element,
+            util = layui.util,
+            $=layui.jquery;
+
+            //TOP固定块
+            util.fixbar({
+              css: {right: 50, bottom: 100}
+              ,bgcolor: '#9F9F9F'
+            });
+          })
+    </script>
+
+</body>
+</html>
