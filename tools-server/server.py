@@ -1,6 +1,5 @@
-import flask, json,urllib,gmpy2
+import flask, json, urllib, gmpy2
 from flask import render_template
-from flask_
 import base64,base58,base91,base36,base62
 #62->pip install pybase62
 from flask_bootstrap import Bootstrap
@@ -8,7 +7,9 @@ from flask import request
 
 server = flask.Flask(__name__)
 
-Bootstrap.init_app(server)
+bootstrap = Bootstrap()
+
+bootstrap.init_app(server)
 
 @server.route('/', methods=['get', 'post'])
 def index():
@@ -16,9 +17,9 @@ def index():
 
 @server.route('/to_base64', methods=['get', 'post'])
 def to_base64():
-    return render_template('base64.html',result='')
+    return render_template('base-base64.html',result='')
+    
 @server.route('/base_all', methods=['get', 'post'])
-
 def base_all():                       
     cypher_text=''
     plain_text=''
@@ -51,7 +52,7 @@ def base_all():
                     resu = {'code': 200, 'result':cypher_text.decode('utf-8') ,'length':len(cypher_text.decode('utf-8'))}
                 else:
                     resu = {'code': 200, 'result': cypher_text,'length':len(cypher_text)}  
-                return render_template('base64.html', result=resu)
+                return render_template('base-base64.html', result=resu)
             elif encode_or_decode=='decode': 
                 cypher_text=text
                 if num_of_base == '64':
@@ -77,12 +78,13 @@ def base_all():
                 else:
                     resu = {'code': 200, 'result': plain_text,'length':len(plain_text)}  
                 #resu = {'code': 200, 'cypher_text':plain_text.decode('utf-8') }
-                return render_template('base64.html',result=resu)
+                return render_template('base-base64.html',result=resu)
         else:
             resu = {'code': 10001, 'message': 'args can not be blank!'}
-            return render_template('base64.html', result=resu)
+            return render_template('base-base64.html', result=resu)
     except :
         resu = {'code': 10000, 'message':'input error' }
-        return render_template('base64.html', result=resu)        
+        return render_template('base-base64.html', result=resu)        
 if __name__ == '__main__':
-    server.run(debug=True, port=8887, host='0.0.0.0')
+    # server.run(port=8887, host='0.0.0.0')
+    server.run(port=8887)
