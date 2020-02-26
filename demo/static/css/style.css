@@ -1,0 +1,161 @@
+
+
+.daohan{
+    margin: 0;
+}
+img{
+    width: 100%;
+}
+
+.cebian{
+    height: 5%;
+}
+
+
+  .scrollbar {
+  width : 30px;
+  height: auto;
+  margin: 0 auto;
+
+  }
+.test-5::-webkit-scrollbar {
+  /*滚动条整体样式*/
+  width : 10px;  /*高宽分别对应横竖滚动条的尺寸*/
+  height: 1px;
+
+  }
+  .test-5::-webkit-scrollbar-thumb {
+  /*滚动条里面小方块*/
+  border-radius   : 10px;
+  background-color: skyblue;
+  background-image: -webkit-linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.2) 25%,
+      transparent 25%,
+      transparent 50%,
+      rgba(255, 255, 255, 0.2) 50%,
+      rgba(255, 255, 255, 0.2) 75%,
+      transparent 75%,
+      transparent
+  );
+  }
+  .test-5::-webkit-scrollbar-track {
+  /*滚动条里面轨道*/
+  box-shadow   : inset 0 0 5px rgba(0, 0, 0, 0.2);
+  background   : #ededed;
+  border-radius: 10px;
+  }
+
+
+
+.mianban{
+    height: auto;
+}
+
+
+
+.main-div{
+    height: 840px;
+    width: auto;
+}
+
+.main-container1{
+    /*background-color: #1b6d85;*/
+    height: 840px;
+    width: 30%;
+    margin: 0px;
+    float: left;
+      border  : none;
+    overflow:auto;
+}
+.main-container2{
+    /*background-color: #8a6d3b;*/
+    height: 840px;
+    width: 70%;
+    margin: 0;
+    float: left
+
+}
+
+.input-div{
+    height: 300px;
+    margin: 0;
+}
+.otherInput-div{
+    /*height: 160px;*/
+    margin: 0;
+    /*display: none;*/
+    /*background-color: #1E9FFF;*/
+}
+.hintt{
+    height: 40px;
+    background-color: #8a6d3b;
+}
+.btn-div{
+
+    height: 40px;
+    margin-top: 5px;
+}
+.btn1{
+    margin:auto 0;
+}
+.result-div{
+    height: 300px;
+    margin: 0;
+}
+
+.other_text{
+    background-color: #337ab7;
+    color: white;
+    padding:6px ;
+
+    /*display:block;*/
+}
+
+
+
+
+
+
+.result-div-part2{
+
+    margin: 0px;
+    float: left;
+      border  : none;
+    height: 240px;
+    word-break:break-all;
+    /*解决html不识别\n*/
+    white-space: pre-line;
+    overflow-y:auto;
+}
+.btn-div-padding{
+  padding-left: 0%;
+
+}
+
+.otherInput-div-p1{
+    margin-top: 5px;
+    height: 35px;
+    /*display: none;*/
+
+
+}
+.main-container2-part1{
+    overflow:auto;
+}
+
+
+a{
+    cursor:pointer;
+    /*font-size:2vw ;*/
+    /*!*max-font-size:5px ;*!*/
+    /*max-font-size: 15px;*/
+}
+span{
+    cursor:pointer;
+
+}
+.change_font_size{
+    font-size:2.5vw ;
+
+}
