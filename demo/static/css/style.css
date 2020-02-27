@@ -91,6 +91,19 @@ img{
     height: 40px;
     background-color: #8a6d3b;
 }
+.hintt div{
+    height: 40px;
+    padding: 0px;
+    margin: 0;
+}
+.hint_div{
+     white-space: pre-line;
+    height: 20px;
+    overflow-y:auto;
+   // background-color: ;
+    /*margin-top: -5px;*/
+
+}
 .btn-div{
 
     height: 40px;
@@ -154,6 +167,10 @@ a{
 span{
     cursor:pointer;
 
+}
+b{
+    font-weight: 300;
+    cursor: pointer;
 }
 .change_font_size{
     font-size:2.5vw ;

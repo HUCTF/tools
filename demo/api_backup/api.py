@@ -1,24 +1,28 @@
+#coding=utf-8
 import flask, json,urllib,gmpy2
 from flask import render_template
 import base64,base58,base91,base36,base62
 #62->pip install pybase62
-from flask import request
+from flask import request, jsonify,make_response,Markup
+#lsof -i:8886
+#netstat
+import sys
+from Dict import Dict,num_of_button,num_of_other_input
 
-
-
-
-'''
-flask： web框架，通过flask提供的装饰器@server.route()将普通函数转换为服务
-登录接口，需要传url、username、passwd
-'''
 # 创建一个服务，把当前这个python文件当做一个服务
-
 server = flask.Flask(__name__)
-
 @server.route('/', methods=['get', 'post'])
 def index():
-    return render_template('index.html')
-
+    # 从Dict.py中读入Dict并且传入html
+    response = make_response(render_template('index.html', Dict=Dict))
+    return response
+@server.route('/get_Dict', methods=['get', 'post'])
+def get_Dict():
+    data = request.get_data()
+    data = data.decode('utf-8')
+    data = json.loads(data)
+    if(data['passwd']=='123456'):
+        return {'Dict':Dict,'num_of_button':num_of_button,'num_of_other_input':num_of_other_input}
 
 #aaa  = flask.Flask(__name__)
 
@@ -35,18 +39,18 @@ def login():
     # 判断用户名、密码都不为空，如果不传用户名、密码则username和pwd为None
     if username and pwd:
         if username == 'xiaoming' and pwd == '111':
-            resu = {'code': 200, 'message': '登录成功'}
+            resu = {'code': 200, 'result': '登录成功'}
             return json.dumps(resu, ensure_ascii=False)  # 将字典转换为json串, json是字符串
         else:
-            resu = {'code': -1, 'message': '账号密码错误'}
+            resu = {'code': -1, 'result': '账号密码错误'}
             return json.dumps(resu, ensure_ascii=False)
     else:
-        resu = {'code': 10001, 'message': '参数不能为空！'}
+        resu = {'code': 10001, 'result': '参数不能为空！'}
         return json.dumps(resu, ensure_ascii=False)
 
-@server.route('/base_all', methods=['get', 'post'])
-#函数功能：base全家桶
-#路径：/base_all
+@server.route('/BASE', methods=['get', 'post'])
+#函数功能：BASE全家桶
+#路径：/BASE
 #输入：
 #   text = 输入字符串
 #   typed= 需要加解密的类型      [BASE64，BASE32，BASE58，BASE91，BASE36，BASE62，BASE85]
@@ -56,14 +60,20 @@ def login():
 #       加密{'code': 200, 'result':加密结果,'lenth':长度 }
 #       解密{'code': 200, 'result':解密结果 ，'lenth':长度 }
 #   失败：
-#       参数为空{'code': 10001, 'message': '参数不能为空！'}
-#       字符集错误{'code': 10000, 'message':'输入字符集错误。' }
-def base_all():
+#       参数为空{'code': 10001, 'result': '参数不能为空！'}
+#       字符集错误{'code': 10000, 'result':'输入字符集错误。' }
+def BASE():
     cypher_text=''
     plain_text=''
-    text=request.values.get('text')              #输入字符串
-    typed=request.values.get('typed')   #输入base（num），即base的类型
-    operator=request.values.get('operator')   #加密或者解密
+    #接收post的数据
+    data = request.get_data()
+    data = data.decode('utf-8')
+    data = json.loads(data)
+
+    text=data['text']              #输入字符串
+    typed=data['typed']   #输入base（num），即base的类型
+    operator=data['operator']   #加密或者解密
+   # print(text)
     try:
         if text and typed and operator:
             if operator == 'encode': #加密算法
@@ -119,71 +129,78 @@ def base_all():
                 return json.dumps(resu, ensure_ascii=False)
 
         else:
-            resu = {'code': 10001, 'message': '参数不能为空！'}
+            resu = {'code': 10001, 'result': '参数不能为空！'}
             return json.dumps(resu, ensure_ascii=False)
     except :
-        resu = {'code': 10000, 'message':'输入字符集错误。' }
+        resu = {'code': 10000, 'result':'输入字符集错误。' }
         return json.dumps(resu, ensure_ascii=False)
 #函数功能：进制转化
-#路径：/base_change_all
+#路径：/Change_B
 #输入：
-#   begin_text = 输入字符串
-#   begin_base = 原进制     [2，8，16，10]
-#   destination = 结果进制 [2，8，16，10]
+#   text = 输入字符串
+#   typed= 原始进制与目标进制（如10_2，为十进制转换为2进制）
+
 #返回：
 #   成功：
-#       {'code': 200, 'destination_text': 结果,'length':结果长度}
+#       {'code': 200, 'result': 结果,'length':结果长度}
 #   失败：
-#       参数为空{'code': 10001, 'message': '参数不能为空！'}
-#       字符集错误{'code': 10000, 'message':'输入字符不符合当前进制字符集。' }
-@server.route('/base_change_all',methods=['get','post'])
-def base_change_all():
-    begin_base = request.values.get('begin_base')
-    destination_base=request.values.get('destination_base')
-    begin_text = request.values.get('begin_text')
-    destination_text=''
+#       参数为空{'code': 10001, 'result': '参数不能为空！'}
+#       字符集错误{'code': 10000, 'result':'输入字符不符合当前进制字符集。' }
+@server.route('/Change_B',methods=['get','post'])
+def Change_B():
+    data = request.get_data()
+    data=data.decode('utf-8')
+    data = json.loads(data)
+    b_d=data['typed'].split('_')
+    # print(b_d)
+    begin_base=b_d[0]
+    destination_base=b_d[1]
+    # print(begin_base)
+    # print(destination_base)
+    text = data['text']
+    result=''
     try:
-        if begin_base and destination_base and begin_text:
+        if begin_base and destination_base and text:
                 if begin_base == '10':
-                    begin_text=int(begin_text)
+                    text=int(text)
                     if destination_base=='2':
-                        destination_text=bin(begin_text)
-                        destination_text=destination_text[2:]
+                        result=bin(text)
+                        result=result[2:]
                     elif destination_base=='8':
-                        destination_text=oct(begin_text)
-                        destination_text = destination_text[2:]
+                        result=oct(text)
+                        result = result[2:]
                     elif destination_base=='16':
-                        destination_text=hex(begin_text)
-                        destination_text = destination_text[2:]
+                        result=hex(text)
+                        result = result[2:]
                 elif begin_base =='8':
                     if destination_base=='10':
-                        destination_text=int(begin_text,8)
+                        result=int(text,8)
                     elif destination_base=='2':
-                        destination_text = bin(int(begin_text, 8))[2:]
+                        result = bin(int(text, 8))[2:]
                     elif destination_base=='16':
-                        destination_text=hex(int(begin_text,8))[2:]
+                        result=hex(int(text,8))[2:]
                 elif begin_base =='2':
                     if destination_base=='10':
-                        destination_text=int(begin_text,2)
+                        result=int(text,2)
                     elif destination_base=='8':
-                        destination_text = oct(int(begin_text, 2))[2:]
+                        result = oct(int(text, 2))[2:]
                     elif destination_base=='16':
-                        destination_text=hex(int(begin_text,2))[2:]
+                        result=hex(int(text,2))[2:]
                 elif begin_base == '16':
                     if destination_base=='10':
-                        destination_text=int(begin_text,16)
+                        result=int(text,16)
                     elif destination_base=='8':
-                        destination_text = oct(int(begin_text, 16))[2:]
+                        result = oct(int(text, 16))[2:]
                     elif destination_base=='2':
-                        destination_text=bin(int(begin_text,16))[2:]
-                resu = {'code': 200, 'destination_text': destination_text,'length':len(destination_text)}
+                        result=bin(int(text,16))[2:]
+                resu = {'code': 200, 'result': result,'length':len(result)}
                 return json.dumps(resu, ensure_ascii=False)
 
         else:
-            resu = {'code': 10001, 'message': '参数不能为空！'}
+            resu = {'code': 10001, 'result': '参数不能为空！'}
             return json.dumps(resu, ensure_ascii=False)
     except:
-        resu = {'code': 10000, 'message': '输入字符不符合当前进制字符集。'}
+        resu = {'code': 10000, 'result': '输入字符不符合当前进制字符集。'}
         return json.dumps(resu, ensure_ascii=False)
 
 #函数功能：ascii与str互转
@@ -191,77 +208,84 @@ def base_change_all():
 #路径：/ascii_str
 #输入：
 #   text = 输入字符串
-#   operator =你想要执行的操作[16进制的ascii转字符串：hex_ascii_to_str,10进制ascii转字符串：dec_ascii_to_str,字符串转16进制ascii：str_to_hex_ascii,字符串转16进制ascii:str_to_hex_ascii]
+#   typed =你想要执行的操作[16进制的ascii转字符串：hex_ascii_to_str,10进制ascii转字符串：dec_ascii_to_str,字符串转16进制ascii：str_to_hex_ascii,字符串转16进制ascii:str_to_hex_ascii]
 #返回：
 #   成功：
 #       {'code': 200, 'result': 结果}
 #   失败：
-#       输入不可见字符集{'code': 10000, 'message': '请输入可见字符。'}
-#       参数为空{'code': 10001, 'message': '参数不能为空！'}
-#       异常{'code': 10002, 'message':'异常。' }
-@server.route('/ascii_str',methods=['get','post'])
-def ascii_str():
-    text=request.values.get('text')
-    operator=request.values.get('operator')
+#       输入不可见字符集{'code': 10000, 'result': '请输入可见字符。'}
+#       参数为空{'code': 10001, 'result': '参数不能为空！'}
+#       异常{'code': 10002, 'result':'异常。' }
+@server.route('/Ascii_str',methods=['get','post'])
+def Ascii_str():
+    data = request.get_data()
+    data = data.decode('utf-8')
+    data = json.loads(data)
+    text=data['text']
+    typed=data['typed']
     result=''
     s=[]
     try:
-        if text and operator:
-            if operator == 'hex_ascii_to_str':
+        if text and typed:
+            if typed == 'str_to_hex_ascii':
                 for i in text:
                     if ord(i) not in range(32, 255):
-                        resu = {'code': 10000, 'message': '请输入可见字符。'}
+                        resu = {'code': 10000, 'result': '请输入可见字符。'}
                         return json.dumps(resu, ensure_ascii=False)
                     result+=hex(ord(i))[2:]+' '
-            elif operator == 'dec_ascii_to_str':
+            elif typed == 'str_to_dec_ascii':
                 for i in text:
                     if ord(i) not in range(32, 255):
-                        resu = {'code': 10000, 'message': '请输入可见字符。'}
+                        resu = {'code': 10000, 'result': '请输入可见字符。'}
                         return json.dumps(resu, ensure_ascii=False)
                     result+=str(ord(i))+' '
-            elif operator == 'str_to_hex_ascii':   #输入格式为12 34 56 78
+            elif typed == 'hex_ascii_to_str':   #输入格式为12 34 56 78
                 s=text.split(' ')
                 for i in s:
                     i='0x'+i
                     if int(i,16) not in range(32, 255):
-                        resu = {'code': 10000, 'message': '请输入可见字符。'}
+                        resu = {'code': 10000, 'result': '请输入可见字符。'}
                         return json.dumps(resu, ensure_ascii=False)
                     result+= chr(int(i,16))
-            elif operator == 'str_to_dec_ascii':
+            elif typed == 'dec_ascii_to_str':
                 s=text.split(' ')
                 for i in s:
                     if int(i) not in range(32, 255):
-                        resu = {'code': 10000, 'message': '请输入可见字符。'}
+                        resu = {'code': 10000, 'result': '请输入可见字符。'}
                         return json.dumps(resu, ensure_ascii=False)
                     result += chr(int(i))
             resu = {'code': 200, 'result': result}
             return json.dumps(resu, ensure_ascii=False)
         else:
-            resu = {'code': 10001, 'message': '参数不能为空！'}
+            resu = {'code': 10001, 'result': '参数不能为空！'}
             return json.dumps(resu, ensure_ascii=False)
     except:
-        resu = {'code': 10002, 'message': '异常。'}
+        resu = {'code': 10002, 'result': '输入格式不对。ascii转字符串请用空格隔开每个数字。'}
         return json.dumps(resu, ensure_ascii=False)
 
 #函数功能：凯撒密码加解密
 #注意：加密解密过程是一样的
-#路径：/caesar_cipher
+#路径：/Caesar
 #输入：
 #   text = 输入字符串 （对非字母进行操作，只显示原字符累加操作）
 #返回：
 #   成功：
-#       {'code': 200, 'result_arr': {"0": "位移0位的结果：liyiyi1"，"1": "位移1位的结果：mjzjzj2"}}
+#       {'code': 200, 'result': {"0": "位移0位的结果：liyiyi1"，"1": "位移1位的结果：mjzjzj2"}}
 #   失败：
-#       输入不可见字符集{'code': 10000, 'message': '请输入可见字符。'}
-#       参数为空{'code': 10001, 'message': '参数不能为空！'}
-#       异常{'code': 10002, 'message':'异常。' }
-@server.route('/caesar_cipher',methods=['get','post'])
-def caesar_cipher():
-    text=request.values.get('text')
+#       输入不可见字符集{'code': 10000, 'result': '请输入可见字符。'}
+#       参数为空{'code': 10001, 'result': '参数不能为空！'}
+#       异常{'code': 10002, 'result':'异常。' }
+@server.route('/Caesar',methods=['get','post'])
+def Caesar():
+    data = request.get_data()
+    data = data.decode('utf-8')
+    data = json.loads(data)
+    text=data['text']
     result={}
+    result_str=''
     for i in text:
         if ord(i) not in range(32, 255):
-            resu = {'code': 10000, 'message': '请输入可见字符。'}
+            resu = {'code': 10000, 'result': '请输入可见字符。'}
             return json.dumps(resu, ensure_ascii=False)
     try:
         if text :
@@ -274,15 +298,16 @@ def caesar_cipher():
                         result[i]+=chr((ord(each)-ord('A')+i)%26+ord('A'))
                     else:
                         result[i] += chr((ord(each)+i))
-
-            resu = {'code': 200, 'result_arr':result}
+            for key in result:
+                result_str=result_str+result[key]+'\n'
+            resu = {'code': 200, 'result':result_str}
             return json.dumps(resu, ensure_ascii=False)
         else:
-            resu = {'code': 10001, 'message': '参数不能为空！'}
+            resu = {'code': 10001, 'result': '参数不能为空！'}
             return json.dumps(resu, ensure_ascii=False)
 
     except:
-        resu = {'code': 10002, 'message': '异常。'}
+        resu = {'code': 10002, 'result': '异常。'}
         return json.dumps(resu, ensure_ascii=False)
 
 #函数功能：栅栏密码解密
@@ -294,20 +319,24 @@ def caesar_cipher():
 #   成功：
 #       {"code": 200, "result": {"分2栏:": "flag{nideyangzi}", "分4栏:": "fa{ieagilgndynz}", "分8栏:": "f{eglnyzaiaigdn}"}}
 #   失败：
-#       输入不可见字符集{'code': 10000, 'message': '请输入可见字符。'}
-#       参数为空{'code': 10001, 'message': '参数不能为空！'}
-#       异常{'code': 10002, 'message':'异常。' }
+#       输入不可见字符集{'code': 10000, 'result': '请输入可见字符。'}
+#       参数为空{'code': 10001, 'result': '参数不能为空！'}
+#       异常{'code': 10002, 'result':'异常。' }
 @server.route('/fence',methods=['get','post'])
 def fence():
-    text = request.values.get('text')
+    data = request.get_data()
+    data = data.decode('utf-8')
+    data = json.loads(data)
+    text = data['text']
     key = 0
     result={}
+    result_str=""
     # 小于间隔继续
     try:
         if text :
             for i in text:
                 if ord(i) not in range(32, 255):
-                    resu = {'code': 10000, 'message': '请输入可见字符。'}
+                    resu = {'code': 10000, 'result': '请输入可见字符。'}
                     return json.dumps(resu, ensure_ascii=False)
             for space in range(2,len(text)):
                 if len(text) % space ==0:
@@ -323,13 +352,15 @@ def fence():
                         index='分'+str(space)+'栏:'
                         result[index]=strr
                         key = key + 1
+            for key in result:
+                result_str=result_str++'\n'
             resu = {'code': 200, 'result': result}
             return json.dumps(resu, ensure_ascii=False)
         else:
-            resu = {'code': 10001, 'message': '参数不能为空！'}
+            resu = {'code': 10001, 'result': '参数不能为空！'}
             return json.dumps(resu, ensure_ascii=False)
     except:
-        resu = {'code': 10002, 'message': '异常。'}
+        resu = {'code': 10002, 'result': '异常。'}
         return json.dumps(resu, ensure_ascii=False)
 #函数功能：培根密码解密
 #注意：明文默认为小写
@@ -340,9 +371,9 @@ def fence():
 #   成功：
 #       {"code": 200, "result": "flag"}
 #   失败：
-#       参数错误{'code': 10003, 'message': '参数错误（不能输入AB（ab）以外的值）'}
-#       参数为空{'code': 10001, 'message': '参数不能为空！'}
-#       异常{'code': 10002, 'message':'异常。' }
+#       参数错误{'code': 10003, 'result': '参数错误（不能输入AB（ab）以外的值）'}
+#       参数为空{'code': 10001, 'result': '参数不能为空！'}
+#       异常{'code': 10002, 'result':'异常。' }
 @server.route('/bacon',methods=['get','post'])
 def bacon():
     text = request.values.get('text')
@@ -368,7 +399,7 @@ def bacon():
 
             for i in text:
                 if i != 'a' and i != 'b' and i!='A' and i!='B':
-                    resu = {'code': 10003, 'message': '参数错误（不能输入AB（ab）以外的值）'}
+                    resu = {'code': 10003, 'result': '参数错误（不能输入AB（ab）以外的值）'}
                     return json.dumps(resu, ensure_ascii=False)
                 elif i == 'a':
                     i = 'A'
@@ -389,10 +420,10 @@ def bacon():
             resu = {'code': 200, 'result': result,'length':len(result)}
             return json.dumps(resu, ensure_ascii=False)
         else:
-            resu = {'code': 10001, 'message': '参数不能为空！'}
+            resu = {'code': 10001, 'result': '参数不能为空！'}
             return json.dumps(resu, ensure_ascii=False)
     except:
-        resu = {'code': 10002, 'message': '异常。'}
+        resu = {'code': 10002, 'result': '异常。'}
         return json.dumps(resu, ensure_ascii=False)
 
 #函数功能：摩尔斯密码加解密
@@ -405,10 +436,10 @@ def bacon():
 #   成功：
 #       {"code": 200, "result": result,'length':结果长度}
 #   失败：
-#       参数错误{'code': 9999, 'message': '输入字符不符合当前解密字符集。'}
-#       参数错误{'code': 10000, 'message': '输入字符不符合当前加密字符集。'}
-#       参数为空{'code': 10001, 'message': '参数不能为空！'}
-#       异常{'code': 10002, 'message':'异常。' }
+#       参数错误{'code': 9999, 'result': '输入字符不符合当前解密字符集。'}
+#       参数错误{'code': 10000, 'result': '输入字符不符合当前加密字符集。'}
+#       参数为空{'code': 10001, 'result': '参数不能为空！'}
+#       异常{'code': 10002, 'result':'异常。' }
 @server.route('/morse',methods=['get','post'])
 def morse():
     text = request.values.get('text')
@@ -431,7 +462,7 @@ def morse():
             if operator == 'decode':
                 for i in text:
                     if i != '.' and i != '-' and i != ' ':
-                        resu = {'code': 9999, 'message': '输入字符不符合当前解密字符集。'}
+                        resu = {'code': 9999, 'result': '输入字符不符合当前解密字符集。'}
                         return json.dumps(resu, ensure_ascii=False)
                 s = text.split(" ")
                 for item in s:
@@ -441,7 +472,7 @@ def morse():
                     if i not in ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q',
                                  'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7',
                                  '8', '9', '?', '/', '()', '-', '.']:
-                        resu = {'code': 10000, 'message': '输入字符不符合当前加密字符集。'}
+                        resu = {'code': 10000, 'result': '输入字符不符合当前加密字符集。'}
                         return json.dumps(resu, ensure_ascii=False)
                 for item in text:
                     if i>='a' and i<='z':
@@ -450,10 +481,10 @@ def morse():
             resu = {'code': 200, 'result':result,'length':len(result)}
             return json.dumps(resu, ensure_ascii=False)
         else:
-            resu = {'code': 10001, 'message': '参数不能为空！'}
+            resu = {'code': 10001, 'result': '参数不能为空！'}
             return json.dumps(resu, ensure_ascii=False)
     except:
-        resu = {'code': 10002, 'message': '异常。'}
+        resu = {'code': 10002, 'result': '异常。'}
         return json.dumps(resu, ensure_ascii=False)
 
 #函数功能：字符串反转
@@ -465,8 +496,8 @@ def morse():
 #   成功：
 #       {'code': 200, 'result': result,'length':结果字符串长度}
 #   失败：
-#       参数为空{'code': 10001, 'message': '参数不能为空！'}
-#       异常{'code': 10002, 'message':'异常。' }
+#       参数为空{'code': 10001, 'result': '参数不能为空！'}
+#       异常{'code': 10002, 'result':'异常。' }
 @server.route('/reverse',methods=['get','post'])
 def reverse():
     text = request.values.get('text')
@@ -477,10 +508,10 @@ def reverse():
             resu = {'code': 200, 'result': result,'length':len(text)}
             return json.dumps(resu, ensure_ascii=False)
         else:
-            resu = {'code': 10001, 'message': '参数不能为空！'}
+            resu = {'code': 10001, 'result': '参数不能为空！'}
             return json.dumps(resu, ensure_ascii=False)
     except:
-        resu = {'code': 10002, 'message': '异常。'}
+        resu = {'code': 10002, 'result': '异常。'}
         return json.dumps(resu, ensure_ascii=False)
 
 #函数功能：Url编码加解密
@@ -493,8 +524,8 @@ def reverse():
 #   成功：
 #       {'code': 200, 'result': result,'length':结果字符串长度}
 #   失败：
-#       参数为空{'code': 10001, 'message': '参数不能为空！'}
-#       异常{'code': 10002, 'message':'异常,可能是输入字符集错误造成的。。' }
+#       参数为空{'code': 10001, 'result': '参数不能为空！'}
+#       异常{'code': 10002, 'result':'异常,可能是输入字符集错误造成的。。' }
 @server.route('/url_code',methods=['get','post'])
 def url_code():
     text = request.values.get('text')
@@ -509,10 +540,10 @@ def url_code():
             resu = {'code': 200, 'result': result,'length':len(result)}
             return json.dumps(resu, ensure_ascii=False)
         else:
-            resu = {'code': 10001, 'message': '参数不能为空！'}
+            resu = {'code': 10001, 'result': '参数不能为空！'}
             return json.dumps(resu, ensure_ascii=False)
     except:
-        resu = {'code': 10002, 'message': '异常,可能是输入字符集错误造成的。'}
+        resu = {'code': 10002, 'result': '异常,可能是输入字符集错误造成的。'}
         return json.dumps(resu, ensure_ascii=False)
 
 #函数功能：rsa加解密
@@ -530,9 +561,9 @@ def url_code():
 #       decode{'code': 200, 'm': 明文,'d':私钥}
 #       encode{'code': 201, 'c': 密文}
 #   失败：
-#       素数{'code': 9999, 'message':'p和q必须是素数'}
-#       参数为空{'code': 10001, 'message': '参数不能为空！'}
-#       异常{'code': 10002, 'message':'异常,可能是输入字符集错误造成的。。' }
+#       素数{'code': 9999, 'result':'p和q必须是素数'}
+#       参数为空{'code': 10001, 'result': '参数不能为空！'}
+#       异常{'code': 10002, 'result':'异常,可能是输入字符集错误造成的。。' }
 @server.route('/rsa',methods=['get','post'])
 def rsa():
 
@@ -544,7 +575,7 @@ def rsa():
     try:
         if p and q and e and operator:
             if not gmpy2.is_prime(p) or not gmpy2.is_prime(q):
-                resu = {'code': 9999, 'message':'p和q必须是素数'}
+                resu = {'code': 9999, 'result':'p和q必须是素数'}
                 return json.dumps(resu, ensure_ascii=False)
             n=gmpy2.mul(p,q)
             if operator == 'decode':
@@ -562,10 +593,10 @@ def rsa():
                 resu = {'code': 201, 'c': str(c)}
                 return json.dumps(resu, ensure_ascii=False)
         else:
-            resu = {'code': 10001, 'message': '参数不能为空！'}
+            resu = {'code': 10001, 'result': '参数不能为空！'}
             return json.dumps(resu, ensure_ascii=False)
     except:
-        resu = {'code': 10002, 'message': '异常。'}
+        resu = {'code': 10002, 'result': '异常。'}
         return json.dumps(resu, ensure_ascii=False)
 
 #函数功能：大整数运算
@@ -580,8 +611,8 @@ def rsa():
 #   成功：
 #       {'code': 200, 'result':结果}
 #   失败：
-#       参数为空{'code': 10001, 'message': '参数不能为空！'}
-#       异常{'code': 10002, 'message':'异常！' }
+#       参数为空{'code': 10001, 'result': '参数不能为空！'}
+#       异常{'code': 10002, 'result':'异常！' }
 @server.route('/big_num',methods=['get','post'])
 def big_num():
     operator = request.values.get('operator')
@@ -591,7 +622,7 @@ def big_num():
         if operator == 'FACT'or operator =='isPrime':
             p = gmpy2.mpz(int(request.values.get('p')))
             if not p:
-                resu = {'code': 10001, 'message': '参数不能为空！'}
+                resu = {'code': 10001, 'result': '参数不能为空！'}
                 return json.dumps(resu, ensure_ascii=False)
             if operator=='FACT':  #p的阶层
                 result=gmpy2.fac(p)
@@ -602,7 +633,7 @@ def big_num():
             q = gmpy2.mpz(int(request.values.get('q')))
             n = gmpy2.mpz(int(request.values.get('n')))
             if not p and not q and not n:
-                resu = {'code': 10001, 'message': '参数不能为空！'}
+                resu = {'code': 10001, 'result': '参数不能为空！'}
                 return json.dumps(resu, ensure_ascii=False)
             if operator == 'POWMN': #计算p**q mod n
                 result=gmpy2.powmod(p,q,n)
@@ -612,7 +643,7 @@ def big_num():
             p = gmpy2.mpz(int(request.values.get('p')))
             q = gmpy2.mpz(int(request.values.get('q')))
             if not p and not q :
-                resu = {'code': 10001, 'message': '参数不能为空！'}
+                resu = {'code': 10001, 'result': '参数不能为空！'}
                 return json.dumps(resu, ensure_ascii=False)
             if operator == 'ADD':#相加
                 print('good')
@@ -644,7 +675,7 @@ def big_num():
         resu = {'code': 200, 'result': str(result)}
         return json.dumps(resu, ensure_ascii=False)
     except:
-        resu = {'code': 10002, 'message': '异常。'}
+        resu = {'code': 10002, 'result': '异常。'}
         return json.dumps(resu, ensure_ascii=False)
 
 #函数功能：键盘密码加解密Qwerty
@@ -657,10 +688,10 @@ def big_num():
 #   成功：
 #       {"code": 200, "result": result,'length':结果长度}
 #   失败：
-#       参数错误{'code': 9999, 'message': '输入字符不符合当前解密字符集。'}
-#       参数错误{'code': 10000, 'message': '输入字符不符合当前加密字符集。'}
-#       参数为空{'code': 10001, 'message': '参数不能为空！'}
-#       异常{'code': 10002, 'message':'异常。' }
+#       参数错误{'code': 9999, 'result': '输入字符不符合当前解密字符集。'}
+#       参数错误{'code': 10000, 'result': '输入字符不符合当前加密字符集。'}
+#       参数为空{'code': 10001, 'result': '参数不能为空！'}
+#       异常{'code': 10002, 'result':'异常。' }
 @server.route('/Keyboard_A',methods=['get','post'])
 def Keyboard_A():
     text = request.values.get('text')
@@ -689,7 +720,7 @@ def Keyboard_A():
             if operator == 'decode':
                 for i in text:
                     if (i<'a' or i>'z') and (i<'A' or i>'z')and i !=' ':
-                        resu = {'code': 9999, 'message': '输入字符不符合当前解密字符集。'}
+                        resu = {'code': 9999, 'result': '输入字符不符合当前解密字符集。'}
                         return json.dumps(resu, ensure_ascii=False)
                 s = text.split(" ")
                 for item in s:
@@ -697,17 +728,17 @@ def Keyboard_A():
             elif operator == 'encode':
                 for i in text:
                     if (i<'a' or i>'z') and (i<'A' or i>'z') :
-                        resu = {'code': 10000, 'message': '输入字符不符合当前加密字符集。'}
+                        resu = {'code': 10000, 'result': '输入字符不符合当前加密字符集。'}
                         return json.dumps(resu, ensure_ascii=False)
                 for item in text:
                     result+=letter2[item]+' '
             resu = {'code': 200, 'result':result,'length':len(result)}
             return json.dumps(resu, ensure_ascii=False)
         else:
-            resu = {'code': 10001, 'message': '参数不能为空！'}
+            resu = {'code': 10001, 'result': '参数不能为空！'}
             return json.dumps(resu, ensure_ascii=False)
     except:
-        resu = {'code': 10002, 'message': '异常。'}
+        resu = {'code': 10002, 'result': '异常。'}
         return json.dumps(resu, ensure_ascii=False)
 
 
@@ -721,10 +752,10 @@ def Keyboard_A():
 #   成功：
 #       {"code": 200, "result": result,'length':结果长度}
 #   失败：
-#       参数错误{'code': 9999, 'message': '输入字符不符合当前解密字符集。'}
-#       参数错误{'code': 10000, 'message': '输入字符不符合当前加密字符集。'}
-#       参数为空{'code': 10001, 'message': '参数不能为空！'}
-#       异常{'code': 10002, 'message':'异常。' }
+#       参数错误{'code': 9999, 'result': '输入字符不符合当前解密字符集。'}
+#       参数错误{'code': 10000, 'result': '输入字符不符合当前加密字符集。'}
+#       参数为空{'code': 10001, 'result': '参数不能为空！'}
+#       异常{'code': 10002, 'result':'异常。' }
 @server.route('/Keyboard_B',methods=['get','post'])
 def Keyboard_B():
     text = request.values.get('text')
@@ -752,7 +783,7 @@ def Keyboard_B():
             if operator == 'decode':
                 for i in text:
                     if (i<'a' or i>'z') and i !=' ':
-                        resu = {'code': 9999, 'message': '输入字符不符合当前解密字符集。'}
+                        resu = {'code': 9999, 'result': '输入字符不符合当前解密字符集。'}
 
                         return json.dumps(resu, ensure_ascii=False)
                 s = text.split(" ")
@@ -761,17 +792,17 @@ def Keyboard_B():
             elif operator == 'encode':
                 for i in text:
                     if (i<'a' or i>'z') and (i<'A' or i>'z') :
-                        resu = {'code': 10000, 'message': '输入字符不符合当前加密字符集。'}
+                        resu = {'code': 10000, 'result': '输入字符不符合当前加密字符集。'}
                         return json.dumps(resu, ensure_ascii=False)
                 for item in text:
                     result+=letter2[item]+' '
             resu = {'code': 200, 'result':result,'length':len(result)}
             return json.dumps(resu, ensure_ascii=False)
         else:
-            resu = {'code': 10001, 'message': '参数不能为空！'}
+            resu = {'code': 10001, 'result': '参数不能为空！'}
             return json.dumps(resu, ensure_ascii=False)
     except:
-        resu = {'code': 10002, 'message': '异常。'}
+        resu = {'code': 10002, 'result': '异常。'}
         return json.dumps(resu, ensure_ascii=False)
 
 
@@ -784,8 +815,8 @@ def Keyboard_B():
 #   成功：
 #       {"code": 200, "result": cnt_dict,'length':lenth}
 #   失败：
-#       参数为空{'code': 10001, 'message': '参数不能为空！'}
-#       异常{'code': 10002, 'message':'异常。' }
+#       参数为空{'code': 10001, 'result': '参数不能为空！'}
+#       异常{'code': 10002, 'result':'异常。' }
 # @server.route('/Letter_frequence',methods=['get','post'])
 # def Letter_frequence():
 #     text = request.values.get('text')
@@ -800,10 +831,10 @@ def Keyboard_B():
 # 		resu = {'code': 200, 'result':cnt_dict,'length':len(cnt_dict)}
 # 		return json.dumps(resu, ensure_ascii=False)
 #         else:
-# 		resu = {'code': 10001, 'message': '参数不能为空！'}
+# 		resu = {'code': 10001, 'result': '参数不能为空！'}
 # 		return json.dumps(resu, ensure_ascii=False)
 #     except:
-# 	resu = {'code': 10002, 'message': '异常。'}
+# 	resu = {'code': 10002, 'result': '异常。'}
 # 	return json.dumps(resu, ensure_ascii=False)
 
 
@@ -816,9 +847,9 @@ def Keyboard_B():
 #   成功：
 #       {"code": 200, "result": result,'length':lenth}
 #   失败：
-#	输入错误{'code': 10000, 'message': '输入错误'}
-#       参数为空{'code': 10001, 'message': '参数不能为空！'}
-#       异常{'code': 10002, 'message':'异常。' }
+#	输入错误{'code': 10000, 'result': '输入错误'}
+#       参数为空{'code': 10001, 'result': '参数不能为空！'}
+#       异常{'code': 10002, 'result':'异常。' }
 # @server.route('/Socialist_code',methods=['get','post'])
 # def Socialist_code():
 #     text = request.values.get('text')
@@ -833,7 +864,7 @@ def Keyboard_B():
 # 			#print 1
 # 			len_str = len(text)
 # 			if len_str % 16 == 0:
-# 				resu={'code': 10000, 'message': '输入错误'}
+# 				resu={'code': 10000, 'result': '输入错误'}
 # 				return json.dumps(resu, ensure_ascii=False)
 # 			for x in range(0, len_str, 16):
 # 				decode_char = text[x:x+16]
@@ -880,13 +911,12 @@ def Keyboard_B():
 # 		#print 'aaaa'+resu
 # 		return json.dumps(resu, ensure_ascii=True)
 #         else:
-# 		resu = {'code': 10001, 'message': '参数不能为空！'}
+# 		resu = {'code': 10001, 'result': '参数不能为空！'}
 # 		return json.dumps(resu, ensure_ascii=False)
 #     except:
-# 	resu = {'code': 10002, 'message': '异常。'}
+# 	resu = {'code': 10002, 'result': '异常。'}
 # 	return json.dumps(resu, ensure_ascii=False)
-
 def des():
     return
 if __name__ == '__main__':
-    server.run(debug=True, port=8887, host='0.0.0.0')  # 指定端口、host,0.0.0.0代表不管几个网卡，任何ip都可以访问
+    server.run( port=8886, host='0.0.0.0')  # 指定端口、host,0.0.0.0代表不管几个网卡，任何ip都可以访问

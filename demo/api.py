@@ -475,13 +475,19 @@ def morse():
                 for item in s:
                     result += dict1[item]
             elif operator == 'encode':
+                text2=''
                 for i in text:
+                    if i>='a' and i<='z':
+                        i=chr(ord(i)-ord('a')+ord('A'))
+                    text2=text2+i
+                print(text2)
+                for i in text2:
                     if i not in ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q',
                                  'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7',
                                  '8', '9', '?', '/', '()', '-', '.']:
                         resu = {'code': 10000, 'result': '输入字符不符合当前加密字符集。'}
                         return json.dumps(resu, ensure_ascii=False)
-                for item in text:
+                for item in text2:
                     if i>='a' and i<='z':
                         i=chr(ord(item-32))
                     result+=dict2[item]+' '
@@ -635,13 +641,13 @@ def rsa():
 #       异常{'code': 10002, 'result':'异常！' }
 @server.route('/big_num',methods=['get','post'])
 def big_num():
-        data = request.get_data()
-        data = data.decode('utf-8')
-        data = json.loads(data)
-        operator = data['typed']
-        result=''
-        print(data)
-   # try:
+    data = request.get_data()
+    data = data.decode('utf-8')
+    data = json.loads(data)
+    operator = data['typed']
+    result=''
+    print(data)
+    try:
         if operator == 'num_FACT'or operator =='num_isPrime':
             p = gmpy2.mpz(int(data['text']))
             if not p:
@@ -681,7 +687,7 @@ def big_num():
             elif operator=='num_MOD':#取余
                 result=gmpy2.f_mod(p,q)
             elif operator=='num_POW':
-                result=gmpy2.powmod(p,q)
+                result=gmpy2.mpz(p)**q
             elif operator=='num_GCD':#最大公因数
                 result=gmpy2.gcd(p,q)
             elif operator=='num_LCM':
@@ -698,7 +704,7 @@ def big_num():
                 result=p>>q 
         resu = {'code': 200, 'result': str(result)}
         return json.dumps(resu, ensure_ascii=False)
-    #except:
+    except:
         resu = {'code': 10002, 'result': '异常。'}
         return json.dumps(resu, ensure_ascii=False)
 
