@@ -1,5 +1,5 @@
 #coding=utf-8
-import flask, json,urllib,gmpy2
+import flask, json,urllib.parse,gmpy2
 from flask import render_template
 import base64,base58,base91,base36,base62
 #62->pip install pybase62
@@ -290,14 +290,14 @@ def Caesar():
     try:
         if text :
             for i in range(0,26):
-                result[i] = '位移' + str(i) + '位的结果：'
+                result[i] = '位移' + str(i) + '位的结果：\t'
                 for each in text:
                     if each>='a' and each<='z':
                         result[i]+=chr((ord(each)-ord('a')+i)%26+ord('a'))
                     elif each>='A' and each<='Z':
                         result[i]+=chr((ord(each)-ord('A')+i)%26+ord('A'))
                     else:
-                        result[i] += chr((ord(each)+i))
+                        result[i] += each
             for key in result:
                 result_str=result_str+result[key]+'\n'
             resu = {'code': 200, 'result':result_str}
@@ -324,7 +324,10 @@ def Caesar():
 #       异常{'code': 10002, 'result':'异常。' }
 @server.route('/fence',methods=['get','post'])
 def fence():
-    text = request.values.get('text')
+    data = request.get_data()
+    data = data.decode('utf-8')
+    data = json.loads(data)
+    text=data['text']
     key = 0
     result={}
     result_str=""
@@ -350,8 +353,8 @@ def fence():
                         result[index]=strr
                         key = key + 1
             for key in result:
-                result_str=result_str++'\n'
-            resu = {'code': 200, 'result': result}
+                result_str=result_str+result[key]+'\n'
+            resu = {'code': 200, 'result': result_str}
             return json.dumps(resu, ensure_ascii=False)
         else:
             resu = {'code': 10001, 'result': '参数不能为空！'}
@@ -373,7 +376,10 @@ def fence():
 #       异常{'code': 10002, 'result':'异常。' }
 @server.route('/bacon',methods=['get','post'])
 def bacon():
-    text = request.values.get('text')
+    data = request.get_data()
+    data = data.decode('utf-8')
+    data = json.loads(data)
+    text=data['text']
     new=''
     lists = []
     # 分割，五个一组
@@ -439,9 +445,13 @@ def bacon():
 #       异常{'code': 10002, 'result':'异常。' }
 @server.route('/morse',methods=['get','post'])
 def morse():
-    text = request.values.get('text')
+    data = request.get_data()
+    data = data.decode('utf-8')
+    data = json.loads(data)
+    text=data['text']
+    operator = data['operator']
     result = ''
-    operator = request.values.get('operator')
+    print(text)
     try:
         if text and operator:
             dict1 = {'.-': 'A', '-...': 'B', '-.-.': 'C', '-..': 'D', '.': 'E', '..-.': 'F', '--.': 'G', '....': 'H',
@@ -497,7 +507,11 @@ def morse():
 #       异常{'code': 10002, 'result':'异常。' }
 @server.route('/reverse',methods=['get','post'])
 def reverse():
-    text = request.values.get('text')
+    data = request.get_data()
+    data = data.decode('utf-8')
+    data = json.loads(data)
+    text=data['text']
+    operator = data['typed']
     result=''
     try:
         if text:
@@ -525,23 +539,27 @@ def reverse():
 #       异常{'code': 10002, 'result':'异常,可能是输入字符集错误造成的。。' }
 @server.route('/url_code',methods=['get','post'])
 def url_code():
-    text = request.values.get('text')
-    operator=request.values.get('operator')
+    data = request.get_data()
+    data = data.decode('utf-8')
+    data = json.loads(data)
+    text=data['text']
+    operator = data['operator']
     result=''
-    try:
-        if text and operator:
+    print(data,text,operator)
+    
+    if text and operator:
             if operator == 'encode':
-                result = urllib.quote(text)
+                result = urllib.parse.quote(text)
             elif operator == 'decode':
-                result = urllib.unquote(text)
+                result = urllib.parse.unquote(text)
             resu = {'code': 200, 'result': result,'length':len(result)}
             return json.dumps(resu, ensure_ascii=False)
-        else:
+    else:
             resu = {'code': 10001, 'result': '参数不能为空！'}
             return json.dumps(resu, ensure_ascii=False)
-    except:
-        resu = {'code': 10002, 'result': '异常,可能是输入字符集错误造成的。'}
-        return json.dumps(resu, ensure_ascii=False)
+
+    resu = {'code': 10002, 'result': '异常,可能是输入字符集错误造成的。'}
+    return json.dumps(resu, ensure_ascii=False)
 
 #函数功能：rsa加解密
 #注意：
@@ -563,36 +581,41 @@ def url_code():
 #       异常{'code': 10002, 'result':'异常,可能是输入字符集错误造成的。。' }
 @server.route('/rsa',methods=['get','post'])
 def rsa():
-
-    p = gmpy2.mpz(int(request.values.get('p')))
+        data = request.get_data()
+        data = data.decode('utf-8')
+        data = json.loads(data)
+        operator = data['operator']
+        print(data)
+        p = gmpy2.mpz(int(data['text']))
    # print(p)
-    q =  gmpy2.mpz(int(request.values.get('q')))
-    e =  gmpy2.mpz(int(request.values.get('e')))
-    operator=request.values.get('operator')
-    try:
+        q =  gmpy2.mpz(int(data['q']))
+        e =  gmpy2.mpz(int(data['e']))
+        print(data,str(p),str(q),str(e))
+    #try:
         if p and q and e and operator:
             if not gmpy2.is_prime(p) or not gmpy2.is_prime(q):
                 resu = {'code': 9999, 'result':'p和q必须是素数'}
                 return json.dumps(resu, ensure_ascii=False)
             n=gmpy2.mul(p,q)
             if operator == 'decode':
-                c = gmpy2.mpz(int(request.values.get('c')))
+                c = gmpy2.mpz(data['m'])
                 phi_n=gmpy2.mul(gmpy2.sub(p,1),gmpy2.sub(q,1))
                 d = gmpy2.invert(e, phi_n)  # private key
                 m = gmpy2.powmod(c, d, n)
                 print(m)
                 print(d)
-                resu = {'code': 200, 'm': str(m),'d':str(d)}
+                result='m:'+str(m)+'\n'+'d:'+str(d)
+                resu = {'code': 200, 'result':result}
                 return json.dumps(resu, ensure_ascii=False)
             elif operator=='encode':
-                m=gmpy2.mpz(int(request.values.get('m')))
+                m=gmpy2.mpz(data['m'])
                 c=gmpy2.powmod(m,e,n)
-                resu = {'code': 201, 'c': str(c)}
+                resu = {'code': 201, 'result': str(c)}
                 return json.dumps(resu, ensure_ascii=False)
         else:
             resu = {'code': 10001, 'result': '参数不能为空！'}
             return json.dumps(resu, ensure_ascii=False)
-    except:
+   # except:
         resu = {'code': 10002, 'result': '异常。'}
         return json.dumps(resu, ensure_ascii=False)
 
@@ -612,66 +635,70 @@ def rsa():
 #       异常{'code': 10002, 'result':'异常！' }
 @server.route('/big_num',methods=['get','post'])
 def big_num():
-    operator = request.values.get('operator')
-    result='1'
-
-    try:
-        if operator == 'FACT'or operator =='isPrime':
-            p = gmpy2.mpz(int(request.values.get('p')))
+        data = request.get_data()
+        data = data.decode('utf-8')
+        data = json.loads(data)
+        operator = data['typed']
+        result=''
+        print(data)
+   # try:
+        if operator == 'num_FACT'or operator =='num_isPrime':
+            p = gmpy2.mpz(int(data['text']))
             if not p:
                 resu = {'code': 10001, 'result': '参数不能为空！'}
                 return json.dumps(resu, ensure_ascii=False)
-            if operator=='FACT':  #p的阶层
+            if operator=='num_FACT':  #p的阶层
                 result=gmpy2.fac(p)
-            elif operator=='isPrime': #判断p是否是素数
+            elif operator=='num_isPrime': #判断p是否是素数
                 result=gmpy2.is_prime(p)
-        elif operator =='MULMN' or operator =='POWMN':
-            p = gmpy2.mpz(int(request.values.get('p')))
-            q = gmpy2.mpz(int(request.values.get('q')))
-            n = gmpy2.mpz(int(request.values.get('n')))
+                print(gmpy2.is_prime(p))
+        elif operator =='num_MULMN' or operator =='num_POWMN':
+            p = gmpy2.mpz(int(data['text']))
+            q = gmpy2.mpz(int(data['q']))
+            n = gmpy2.mpz(int(data['n']))
             if not p and not q and not n:
                 resu = {'code': 10001, 'result': '参数不能为空！'}
                 return json.dumps(resu, ensure_ascii=False)
-            if operator == 'POWMN': #计算p**q mod n
+            if operator == 'num_POWMN': #计算p**q mod n
                 result=gmpy2.powmod(p,q,n)
-            elif operator == 'MULMN':#计算p*q mod n
+            elif operator == 'num_MULMN':#计算p*q mod n
                 result=gmpy2.modf(gmpy2.mul(p,q),n)
         else:
-            p = gmpy2.mpz(int(request.values.get('p')))
-            q = gmpy2.mpz(int(request.values.get('q')))
+            p = gmpy2.mpz(int(data['text']))
+            q = gmpy2.mpz(int(data['q']))
             if not p and not q :
                 resu = {'code': 10001, 'result': '参数不能为空！'}
                 return json.dumps(resu, ensure_ascii=False)
-            if operator == 'ADD':#相加
+            if operator == 'num_ADD':#相加
                 print('good')
                 result=gmpy2.add(p,q)
-            elif operator=='SUB':#相减
+            elif operator=='num_SUB':#相减
                 result=gmpy2.sub(p,q)
-            elif operator=='MUL':#相乘
+            elif operator=='num_MUL':#相乘
                 result=gmpy2.mul(p,q)
-            elif operator=='DIV':#相除
+            elif operator=='num_DIV':#相除
                 result=gmpy2.div(p,q)
-            elif operator=='MOD':#取余
+            elif operator=='num_MOD':#取余
                 result=gmpy2.f_mod(p,q)
-            elif operator=='POW':
+            elif operator=='num_POW':
                 result=gmpy2.powmod(p,q)
-            elif operator=='GCD':#最大公因数
+            elif operator=='num_GCD':#最大公因数
                 result=gmpy2.gcd(p,q)
-            elif operator=='LCM':
+            elif operator=='num_LCM':
                 result=gmpy2.lcm(p,q)
-            elif operator=='OR':#或
+            elif operator=='num_OR':#或
                 result=p | q
-            elif operator=='AND':#与
+            elif operator=='num_AND':#与
                 result=p & q
-            elif operator=='XOR':#抑或
+            elif operator=='num_XOR':#抑或
                 result=p ^ q
-            elif operator=='SHL':#左移
-                result=p<<q
-            elif operator=='SHR':#右移
-                result=p>>q
+            elif operator=='num_SHL':#左移
+                result=str(p<<q)
+            elif operator=='num_SHR':#右移
+                result=p>>q 
         resu = {'code': 200, 'result': str(result)}
         return json.dumps(resu, ensure_ascii=False)
-    except:
+    #except:
         resu = {'code': 10002, 'result': '异常。'}
         return json.dumps(resu, ensure_ascii=False)
 
@@ -691,9 +718,13 @@ def big_num():
 #       异常{'code': 10002, 'result':'异常。' }
 @server.route('/Keyboard_A',methods=['get','post'])
 def Keyboard_A():
-    text = request.values.get('text')
+    data = request.get_data()
+    data = data.decode('utf-8')
+    data = json.loads(data)
+    text=data['text']
+    operator = data['operator']
     result = ''
-    operator = request.values.get('operator')
+    print(data)
     try:
         if text and operator:
             letter1 = {
@@ -724,12 +755,12 @@ def Keyboard_A():
                     result += letter1[item]
             elif operator == 'encode':
                 for i in text:
-                    if (i<'a' or i>'z') and (i<'A' or i>'z') :
+                    if (ord(i)<ord('a') or ord(i)>ord('z')) and (ord(i)<ord('A') or ord(i)>ord('z')) :
                         resu = {'code': 10000, 'result': '输入字符不符合当前加密字符集。'}
                         return json.dumps(resu, ensure_ascii=False)
                 for item in text:
                     result+=letter2[item]+' '
-            resu = {'code': 200, 'result':result,'length':len(result)}
+            resu = {'code': 200, 'result':str(result),'length':len(result)}
             return json.dumps(resu, ensure_ascii=False)
         else:
             resu = {'code': 10001, 'result': '参数不能为空！'}
@@ -755,9 +786,12 @@ def Keyboard_A():
 #       异常{'code': 10002, 'result':'异常。' }
 @server.route('/Keyboard_B',methods=['get','post'])
 def Keyboard_B():
-    text = request.values.get('text')
+    data = request.get_data()
+    data = data.decode('utf-8')
+    data = json.loads(data)
+    text=data['text']
+    operator = data['operator']
     result = ''
-    operator = request.values.get('operator')
     try:
         if text and operator:
             letter2 = {
@@ -816,24 +850,26 @@ def Keyboard_B():
 #       异常{'code': 10002, 'result':'异常。' }
 # @server.route('/Letter_frequence',methods=['get','post'])
 # def Letter_frequence():
-#     text = request.values.get('text')
-#     try:
-#         if text:
-# 		cnt_dict ={}
-# 		for c in text:
-# 			if c in cnt_dict:
-# 				cnt_dict[c] = cnt_dict[c] + 1
-# 			else:
-# 				cnt_dict[c] = 1
-# 		resu = {'code': 200, 'result':cnt_dict,'length':len(cnt_dict)}
-# 		return json.dumps(resu, ensure_ascii=False)
-#         else:
-# 		resu = {'code': 10001, 'result': '参数不能为空！'}
-# 		return json.dumps(resu, ensure_ascii=False)
-#     except:
-# 	resu = {'code': 10002, 'result': '异常。'}
-# 	return json.dumps(resu, ensure_ascii=False)
-
+ #    text = request.values.get('text')
+  #   try:
+#
+ #        if text:
+ #		cnt_dict ={}
+ #		for c in text:
+ #			if c in cnt_dict:
+ #				cnt_dict[c] = cnt_dict[c] + 1
+ #			else:
+ #				cnt_dict[c] = 1
+ #               
+ #		resu = {'code': 200, 'result':cnt_dict,'length':len(cnt_dict)}
+ #		return json.dumps(resu, ensure_ascii=False)
+ #        else:
+ #		resu = {'code': 10001, 'result': '参数不能为空！'}
+ #		return json.dumps(resu, ensure_ascii=False)
+  #   except:
+ #	resu = {'code': 10002, 'result': '异常。'}
+ #	return json.dumps(resu, ensure_ascii=False)
+#
 
 #函数功能：社会主义核心价值观编码的加密与解密
 #注意：
@@ -917,4 +953,4 @@ def Keyboard_B():
 def des():
     return
 if __name__ == '__main__':
-    server.run(debug=True, port=8886, host='0.0.0.0')  # 指定端口、host,0.0.0.0代表不管几个网卡，任何ip都可以访问
+    server.run(debug=True, port=8885, host='0.0.0.0')  # 指定端口、host,0.0.0.0代表不管几个网卡，任何ip都可以访问

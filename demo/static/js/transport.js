@@ -5,37 +5,33 @@ var dic=[]
 var Dict={}
 var num_of_button //按钮数量
 var num_of_other_input //其他输入框数量
-//根据字典，自动生成函数
 
+var eval_str=''
 $(document).ready(function(){
     //获取Dict
     get_Dict()
-   // span_slide()等到加载完Dict再执行
-   //  setTimeout(function () {
-   //      span_slide()
-   //  }, 1000);
-
+   // 侧边栏伸缩控制
+     span_slide()
     //点击选项修改按钮和输入框标题
     span_click()
-    //点击按钮时进行的操作
+    //点击按钮时进行的运算操作，通信操作在这里完成
     button_click()
+    //复制
+    click_copy()
 
 });
 
+// 侧边栏伸缩控制
+function span_slide() {
+   $("b").click(function () {
 
-// function span_slide() {
-//     var eval_str=''
-//     alert('q')
-//     alert(Dict['BASE']['name'])
-//     for(id in Dict){
-// //alert('q')
-//         eval_str+= '$("#"'+id+'"_bt").click(function(){$("#"+'+id+').slideToggle();});\n'
-//
-//     }
-//  alert(eval_str)
-//     alert('$("#"'+id+'"_bt").click(function(){$("#"+'+id+').slideToggle();});')
-//     eval(eval_str)
-// }
+       var idd=$(this).attr('id')
+       idd=idd.substring(0,idd.length-3)
+        eval_str= '$("#'+idd+'").slideToggle();\n'
+      // alert(eval_str)
+       eval(eval_str)
+   })
+}
 //点击按钮事件
 function button_click() {
     //alert(num_of_button)
@@ -58,6 +54,7 @@ function button_click() {
                       dataa+=other_input_value_text[i][0]+':this.'+other_input_value_text[i][0]+',\n'
                   }
               }
+             // alert(strr)
               strr= '   this.text=text\n' +
                     '   this.typed=typed\n' +
                     '   this.url= "/'+id+'"\n' +
@@ -85,14 +82,17 @@ function span_click(){
       //a中的value为非标准属性，不能使用$(this).val()
       typed=$(this).attr('value')
      $("#inputTop").text($(this).text()+" 工具");//在淡入淡出之间来回切换
+
       //a中的value为非标准属性，不能使用$(this).val()
       typed=$(this).attr('value')
 
         var flag=0
      //这里用来删除多余按钮,并且更改其他输入框的信息
       for(id in Dict){
+
             if(typed.search(id)!=-1){
-               $ ('#hintt').text(Dict[id]['hint'])
+               $("#text").attr('placeholder',Dict[id]['input_placeholder']);
+               $ ('#hintt').text('hint:'+Dict[id]['hint'])
              btn_control_str=''
              btn_control_arr=Dict[id]['btn_code']
              otherInput_control_arr=Dict[id]['other_input_code']
@@ -109,15 +109,17 @@ function span_click(){
              eval(btn_control_str)
               for(i=0;i<num_of_other_input;i++ ){
                  if(otherInput_control_arr[i]==0){
-                     otherInput_control_str+='$("#other'+String(i+1)+'").hide(100);'
+                     otherInput_control_str+='$("#other'+String(i+1)+'").hide(100);\n'
                  }else{
                      flag++ //记录其他输入的数量
-                     otherInput_control_str+='$("#other'+String(i+1)+'").show(100);'
-                     otherInput_control_str+='$("#other'+String(i+1)+'_span").text('+'"'+other_input_value_text[i][1]+'"'+');' //修改其他输入的名字
-                    otherInput_control_str+='$("#other'+String(i+1)+'_input").text('+'"'+other_input_value_text[i][0]+'"'+');' //修改其他输入的value
+                     otherInput_control_str+='$("#other'+String(i+1)+'").show(100);\n'
+                     otherInput_control_str+='$("#other'+String(i+1)+'_span").text('+'"'+other_input_value_text[i][1]+'"'+');\n' //修改其他输入的名字
+                    otherInput_control_str+='$("#other'+String(i+1)+' input:first").attr("id",'+'"'+other_input_value_text[i][0]+'"'+');\n' //修改其他输入的value
                  }
              }
+             //alert(otherInput_control_str)
              eval(otherInput_control_str)
+                //界面高度控制
              height_control(flag)
           }
       }
@@ -162,7 +164,7 @@ function transport(url,data) {
             },
             //请求失败，包含具体的错误信息
             error : function(e){
-                alert("未知错误")
+                alert("通信失败")
 
             }
         });
@@ -180,6 +182,7 @@ function get_Dict() {
                    Dict=result['Dict']
                    num_of_button=result['num_of_button']
                    num_of_other_input=result['num_of_other_input']
+
             },
             //请求失败，包含具体的错误信息
             error : function(e){
@@ -189,65 +192,18 @@ function get_Dict() {
         });
 
 }
+//按钮复制功能
+function click_copy() {
+        // var content = $("#result").text();
+        var content = $("#result").html();  
+    var clipboard = new Clipboard('.btn-warning', {  
+        text: function() {  
+            return content;  
+        }  
+    });  
+    clipboard.on('success', function(e) {  
+        alert("复制成功");  
+    });  
 
 
-// function Caesar() {
-//    this.url= "/get_Dict"
-//    this.data={
-//        passwd:'123456',
-//    }
-//    //通信
-//    var TR = new transport(this.url ,this.data)
-//    TR.transport()
-// }
-// function Ascii_str() {
-//    this.text=text
-//    this.typed=typed
-//    this.url= "/Ascii_str"
-//    this.data={
-//        text:this.text,
-//        typed:this.typed.substring(10),
-//    }
-//    //通信
-//    var TR = new transport(this.url ,this.data)
-//    TR.transport()
-// }
-// function Change_B() {
-//    // alert('good')
-//    this.text=text
-//    this.typed=typed
-//    // alert(this.typed)
-//    this.url= "/Change_BASE"
-//    this.data={
-//        text:this.text,
-//        typed:this.typed.substring(9),
-//    }
-//    var TR = new transport(this.url ,this.data)
-//    TR.transport()
-// }
-//
-// function BASE(){
-//
-//    this.text=text
-//    this.typed=typed
-//    this.url= "/BASE"
-//    this.operator=operator
-//    this.data={
-//        text:this.text,
-//        typed:this.typed.substring(5),
-//        operator:this.operator,
-//    }
-//    var TR = new transport(this.url ,this.data)
-//    TR.transport()
-// }
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+}

@@ -5,19 +5,20 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>huctf工具集</title>
     <link rel="stylesheet" href="static/plugin/bootstrap.css">
     <link rel="stylesheet" href="static/css/style.css">
     <script src="static/plugin/jquery-3.3.1.min.js"></script>
     <script src="static/plugin/bootstrap.min.js"></script>
     <script src="static/js/common.js"></script>
     <script src="static/js/transport.js"></script>
+    <script type="text/javascript" src="static/plugin/jquery.zclip.js"></script>
 </head >
 <body class="" style="max-width: 1300px;margin: 0 auto">
 <!-- 导航栏 -->
 <ul class="breadcrumb daohan" >
-    <li><a href="#">主页</a></li>
-    <li><a href="#">湖州师范学院</a></li>
+    <li><a href="http://ctf.hutc.xyz:81/">主页</a></li>
+    <li><a href="http://www.zjhu.edu.cn/">湖州师范学院</a></li>
     <li class="active">网络空间安全实验室</li>
 </ul>
 
@@ -60,11 +61,11 @@
 
        {% for id in Dict %}
             <div>
-                <span href="#" class="list-group-item active " id="{{ id+'_bt' }}" style="cursor:pointer">
+                <b href="#" class="list-group-item active "  id="{{ id+'_bt' }}" style="cursor:pointer">
                     {{ Dict[id]['name'] }}  <span class="caret"></span>
-                </span>
+                </b>
 
-                <div id="{{ id}}" style=" ">
+                <div id="{{ id}}" style="display: none ">
                     {% for valuee in Dict[id]['typed_value_text'] %}
                         <span  class="list-group-item" value="{{ id+'_'+valuee }}">{{ Dict[id]['typed_value_text'][valuee]  }}</span>
                     {% endfor %}
@@ -89,29 +90,29 @@
         <div class="otherInput-div">
             <div class="input-group otherInput-div-p1" id="other1">
 			    <span class="input-group-addon other_text" id="other1_span">其他输入</span>
-			<input type="text" class="form-control " placeholder="未输入" id="other1_input">
+			<input type="text" class="form-control " placeholder="未输入" >
 		    </div>
 
             <div class="input-group otherInput-div-p1 " id="other2">
 			    <span class="input-group-addon other_text" id="other2_span">其他输入</span>
-			<input type="text" class="form-control" placeholder="未输入" id="other2_input">
+			<input type="text" class="form-control" placeholder="未输入" >
 		    </div>
 
             <div class="input-group otherInput-div-p1" id="other3">
 			    <span class="input-group-addon other_text" id="other3_span">其他输入</span>
-			<input type="text" class="form-control" placeholder="未输入" id="other3_input">
+			<input type="text" class="form-control" placeholder="未输入" >
 		    </div>
 
             <div class="input-group otherInput-div-p1" id="other4">
 			    <span class="input-group-addon other_text" id="other4_span">其他输入</span>
-			<input type="text" class="form-control" placeholder="未输入" id="other4_input">
+			<input type="text" class="form-control" placeholder="未输入" >
 		    </div>
 
         </div>
 
     <div class="hintt">
-        <div class="alert alert-info"style="height: 40px">
-            <div style="margin-top: -5px;" id="hintt">信息！请注意这个信息。</div>
+        <div class="alert alert-info">
+            <div class="hint_div test-5" id="hintt">hint:这是一个注释</div>
         </div>
     </div>
     <!-- 按钮 -->
